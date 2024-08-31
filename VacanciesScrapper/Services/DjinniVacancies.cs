@@ -1,6 +1,8 @@
 ﻿using HtmlAgilityPack;
 using VacanciesScrapper.Enums;
+using VacanciesScrapper.Models;
 using VacanciesScrapper.Switches;
+using VacanciesScrapper.Utils;
 
 namespace VacanciesScrapper.Services
 {
@@ -11,7 +13,7 @@ namespace VacanciesScrapper.Services
 			
 		}
 
-		public async static Task<IEnumerable<string>> GetAllVacancies(Categories cat, YearsOfExperience? exp)
+		public async static Task<IEnumerable<Vacancy>> GetAllVacancies(Categories cat, YearsOfExperience? exp)
 		{
 
 			HttpClient client = new();
@@ -37,13 +39,32 @@ namespace VacanciesScrapper.Services
 
 
 
-			var nodes = document.DocumentNode.SelectNodes("//a[@class='job-item__title-link']");
+			var nodes = document.DocumentNode.SelectNodes("//ul[@class='list-unstyled list-jobs mb-4']/li[@class='mb-5']");
 
-			var result = new List<string>();
-			foreach(var n in nodes)
-			{
-				result.Add(n.InnerText.Trim() + " (Djinni)");
-			}
+            var result = new List<Vacancy>();
+            foreach (var node in nodes)
+            {
+                //var salary = node.SelectSingleNode(".//h3[@class='mb-2']/strong[@class='text-success']/span[@class='public-salary-item']").InnerText;
+                var unTrimTitle = node.SelectSingleNode(".//h3[@class='mb-2']/a[@class='job-item__title-link']").InnerText;
+                var unTrimLocation = node.SelectSingleNode(".//span[@class='location-text']").InnerText;
+                var unTrimShortDescription = node.SelectSingleNode(".//span[@class='js-truncated-text']").InnerText.Trim();
+                var unTrimCompany = node.SelectSingleNode(".//a[@class='text-body']").InnerText.Trim();
+
+                var title = CodeCleaner.ScrubHtml(unTrimTitle);
+                var location = CodeCleaner.ScrubHtml(unTrimLocation);
+                var shortDescription = CodeCleaner.ScrubHtml(unTrimShortDescription);
+                var company = CodeCleaner.ScrubHtml(unTrimCompany);
+
+                result.Add(new Vacancy
+                {
+                    Title = title,
+                    Location = location,
+                    ShortDescription = shortDescription,
+                    Company = company,
+                    //Salary = salary is null ? salary : "?",
+                });
+            }
+
             return result;
         }
 	}

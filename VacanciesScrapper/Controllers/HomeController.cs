@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 using VacanciesScrapper.Enums;
 using VacanciesScrapper.Services;
+using VacanciesScrapper.Models;
 
 namespace VacanciesScrapper.Controllers
 {
@@ -19,7 +20,7 @@ namespace VacanciesScrapper.Controllers
         }
 
         [HttpGet(Name = "GetAllVacanciesByCategory")]
-        public async Task<IEnumerable<string>> GetAllVacanciesByCategory(Categories cat, YearsOfExperience exp)
+        public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories cat, YearsOfExperience exp)
         {
             return await DjinniVacancies.GetAllVacancies(cat, exp);
         }

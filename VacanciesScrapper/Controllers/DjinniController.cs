@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VacanciesScrapper.Enums;
+using VacanciesScrapper.Models;
 using VacanciesScrapper.Services;
 
 namespace VacanciesScrapper.Controllers;
@@ -17,7 +18,7 @@ public class DjinniController : ControllerBase
     }
 
     [HttpGet(Name = "GetAllDjinniVacanciesByCategory")]
-    public async Task<IEnumerable<string>> GetAllVacanciesByCategory(Categories cat, YearsOfExperience exp)
+    public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories cat, YearsOfExperience exp)
     {
         return await DjinniVacancies.GetAllVacancies(cat, exp);
     }
