@@ -45,15 +45,16 @@ namespace VacanciesScrapper.Services
             foreach (var node in nodes)
             {
                 //var salary = node.SelectSingleNode(".//h3[@class='mb-2']/strong[@class='text-success']/span[@class='public-salary-item']").InnerText;
-                var unTrimTitle = node.SelectSingleNode(".//h3[@class='mb-2']/a[@class='job-item__title-link']").InnerText;
-                var unTrimLocation = node.SelectSingleNode(".//span[@class='location-text']").InnerText;
-                var unTrimShortDescription = node.SelectSingleNode(".//span[@class='js-truncated-text']").InnerText.Trim();
-                var unTrimCompany = node.SelectSingleNode(".//a[@class='text-body']").InnerText.Trim();
+                var title = node.SelectSingleNode(".//h3[@class='mb-2']/a[@class='job-item__title-link']").InnerText;
+                var location = node.SelectSingleNode(".//span[@class='location-text']").InnerText;
+                var shortDescription = node.SelectSingleNode(".//span[@class='js-truncated-text']").InnerText.Trim();
+                var company = node.SelectSingleNode(".//a[@class='text-body']").InnerText.Trim();
+                var link = node.SelectSingleNode(".//h3[@class='mb-2']/a[@class='job-item__title-link']").Attributes["href"].Value.Trim();
 
-                var title = CodeCleaner.ScrubHtml(unTrimTitle);
-                var location = CodeCleaner.ScrubHtml(unTrimLocation);
-                var shortDescription = CodeCleaner.ScrubHtml(unTrimShortDescription);
-                var company = CodeCleaner.ScrubHtml(unTrimCompany);
+                CodeCleaner.ScrubHtml(ref title);
+                CodeCleaner.ScrubHtml(ref location);
+                CodeCleaner.ScrubHtml(ref shortDescription);
+                CodeCleaner.ScrubHtml(ref company);
 
                 result.Add(new Vacancy
                 {
@@ -61,6 +62,7 @@ namespace VacanciesScrapper.Services
                     Location = location,
                     ShortDescription = shortDescription,
                     Company = company,
+                    Link = "https://djinni.co " + link
                     //Salary = salary is null ? salary : "?",
                 });
             }

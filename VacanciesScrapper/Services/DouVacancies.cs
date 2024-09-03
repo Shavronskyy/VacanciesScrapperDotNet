@@ -47,11 +47,14 @@ namespace VacanciesScrapper.Services
                 var date = node.SelectSingleNode(".//div[@class='date']").InnerText;
                 var title = node.SelectSingleNode(".//div[@class='title']/a[@class='vt']").InnerText;
                 var location = node.SelectSingleNode(".//div[@class='title']/span[@class='cities']").InnerText;
-                var unTrimShortDescription = node.SelectSingleNode(".//div[@class='sh-info']").InnerText.Trim();
-                var unTrimCompany = node.SelectSingleNode(".//div[@class='title']/strong/a[@class='company']").InnerText.Trim();
+                var shortDescription = node.SelectSingleNode(".//div[@class='sh-info']").InnerText.Trim();
+                var company = node.SelectSingleNode(".//div[@class='title']/strong/a[@class='company']").InnerText.Trim();
+                var link = node.SelectSingleNode(".//div[@class='title']/a[@class='vt']").Attributes["href"].Value.Trim();
 
-                var shortDescription = CodeCleaner.ScrubHtml(unTrimShortDescription);
-                var company = CodeCleaner.ScrubHtml(unTrimCompany);
+                CodeCleaner.ScrubHtml(ref title);
+                CodeCleaner.ScrubHtml(ref location);
+                CodeCleaner.ScrubHtml(ref shortDescription);
+                CodeCleaner.ScrubHtml(ref company);
 
                 result.Add(new Vacancy
                 {
@@ -59,8 +62,8 @@ namespace VacanciesScrapper.Services
                     Title = title,
                     Location = location,
                     ShortDescription = shortDescription,
-                    Company = company
-
+                    Company = company,
+                    Link = link
                 });
             }
 
