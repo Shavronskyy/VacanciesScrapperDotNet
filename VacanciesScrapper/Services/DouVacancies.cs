@@ -44,6 +44,8 @@ namespace VacanciesScrapper.Services
             var result = new List<Vacancy>();
             foreach (var node in nodes)
             {
+                var salaryNode = node.SelectSingleNode(".//div[@class='title']/span[@class='salary']");
+                var salary = salaryNode is null ? string.Empty : salaryNode.InnerText;
                 var date = node.SelectSingleNode(".//div[@class='date']").InnerText;
                 var title = node.SelectSingleNode(".//div[@class='title']/a[@class='vt']").InnerText;
                 var location = node.SelectSingleNode(".//div[@class='title']/span[@class='cities']").InnerText;
@@ -55,6 +57,7 @@ namespace VacanciesScrapper.Services
                 CodeCleaner.ScrubHtml(ref location);
                 CodeCleaner.ScrubHtml(ref shortDescription);
                 CodeCleaner.ScrubHtml(ref company);
+                CodeCleaner.ScrubHtml(ref salary);
 
                 result.Add(new Vacancy
                 {
@@ -63,7 +66,8 @@ namespace VacanciesScrapper.Services
                     Location = location,
                     ShortDescription = shortDescription,
                     Company = company,
-                    Link = link
+                    Link = link,
+                    Salary = salary
                 });
             }
 
