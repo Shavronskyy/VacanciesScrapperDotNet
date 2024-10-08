@@ -39,7 +39,7 @@ namespace VacanciesScrapper.Services
 
 
 
-			var nodes = document.DocumentNode.SelectNodes("//ul[@class='list-unstyled list-jobs mb-4']/li[@class='mb-5']");
+			var nodes = document.DocumentNode.SelectNodes("//ul[@class='list-unstyled list-jobs mb-4']/li[@class='mb-4']");
 
             var result = new List<Vacancy>();
             foreach (var node in nodes)
@@ -49,7 +49,7 @@ namespace VacanciesScrapper.Services
                 var location = node.SelectSingleNode(".//span[@class='location-text']").InnerText;
                 var shortDescription = node.SelectSingleNode(".//span[@class='js-truncated-text']").InnerText.Trim();
                 var company = node.SelectSingleNode(".//a[@class='text-body']").InnerText.Trim();
-                var link = node.SelectSingleNode(".//h3[@class='mb-2']/a[@class='job-item__title-link']").Attributes["href"].Value.Trim();
+                var link = node.SelectSingleNode(".//h3[@class='mb-2']/a").Attributes["href"].Value.Trim();
 
                 CodeCleaner.ScrubHtml(ref title);
                 CodeCleaner.ScrubHtml(ref location);
@@ -62,7 +62,7 @@ namespace VacanciesScrapper.Services
                     Location = location,
                     ShortDescription = shortDescription,
                     Company = company,
-                    Link = "https://djinni.co " + link
+                    Link = "djinni.co" + link,
                     //Salary = salary is null ? salary : "?",
                 });
             }

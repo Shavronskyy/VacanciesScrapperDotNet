@@ -10,6 +10,8 @@ namespace VacanciesScrapper.Models
 		public string ShortDescription { get; set; }
 
 		public string Company { get; set; }
+		
+		public string CompanyImg { get; set; }
 
 		public string Salary { get; set; }
 
