@@ -50,7 +50,8 @@ namespace VacanciesScrapper.Services
                 var location = node.SelectSingleNode(".//span[@class='location-text']").InnerText;
                 var shortDescription = node.SelectSingleNode(".//span[@class='js-truncated-text']").InnerText.Trim();
                 var company = node.SelectSingleNode(".//a[@class='text-body']").InnerText.Trim();
-                var link = node.SelectSingleNode(".//h3[@class='mb-2']/a").Attributes["href"].Value.Trim();
+                var link = node.SelectSingleNode(".//h3[@class='mb-2']/a").Attributes["href"].Value;
+                var companyImg = node.SelectSingleNode(".//img[@class='userpic-image userpic-image_img']").Attributes["src"].Value;
 
                 CodeCleaner.ScrubHtml(ref title);
                 CodeCleaner.ScrubHtml(ref location);
@@ -65,7 +66,8 @@ namespace VacanciesScrapper.Services
                     ShortDescription = shortDescription,
                     Company = company,
                     Link = "djinni.co" + link,
-                    Salary = salary
+                    Salary = salary,
+                    CompanyImg = companyImg
                 });
             }
 
