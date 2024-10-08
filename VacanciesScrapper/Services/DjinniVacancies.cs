@@ -51,7 +51,8 @@ namespace VacanciesScrapper.Services
                 var shortDescription = node.SelectSingleNode(".//span[@class='js-truncated-text']").InnerText.Trim();
                 var company = node.SelectSingleNode(".//a[@class='text-body']").InnerText.Trim();
                 var link = node.SelectSingleNode(".//h3[@class='mb-2']/a").Attributes["href"].Value;
-                var companyImg = node.SelectSingleNode(".//img[@class='userpic-image userpic-image_img']").Attributes["src"].Value;
+                var companyImgNode = node.SelectSingleNode(".//img[@class='userpic-image userpic-image_img']").Attributes["src"].Value;
+                var companyImg = companyImgNode is null ? string.Empty : companyImgNode;
 
                 CodeCleaner.ScrubHtml(ref title);
                 CodeCleaner.ScrubHtml(ref location);
