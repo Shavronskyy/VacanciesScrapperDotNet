@@ -51,7 +51,9 @@ namespace VacanciesScrapper.Services
                 var location = node.SelectSingleNode(".//div[@class='title']/span[@class='cities']").InnerText;
                 var shortDescription = node.SelectSingleNode(".//div[@class='sh-info']").InnerText.Trim();
                 var company = node.SelectSingleNode(".//div[@class='title']/strong/a[@class='company']").InnerText.Trim();
-                var link = node.SelectSingleNode(".//div[@class='title']/a[@class='vt']").Attributes["href"].Value.Trim();
+                var link = node.SelectSingleNode(".//div[@class='title']/a[@class='vt']").Attributes["href"].Value;
+                var companyImgNode = node.SelectSingleNode(".//div[@class='title']/strong/a[@class='company']/img").Attributes["src"].Value;
+                var companyImg = companyImgNode is null ? string.Empty : companyImgNode;
 
                 CodeCleaner.ScrubHtml(ref title);
                 CodeCleaner.ScrubHtml(ref location);
@@ -67,7 +69,8 @@ namespace VacanciesScrapper.Services
                     ShortDescription = shortDescription,
                     Company = company,
                     Link = link,
-                    Salary = salary
+                    Salary = salary,
+                    CompanyImg = companyImg
                 });
             }
 
