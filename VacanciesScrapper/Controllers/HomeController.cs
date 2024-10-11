@@ -22,7 +22,7 @@ namespace VacanciesScrapper.Controllers
         [HttpGet(Name = "GetAllVacanciesByCategory")]
         public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories cat, YearsOfExperience exp)
         {
-            return await DjinniVacancies.GetAllVacancies(cat, exp);
+            return await HomeVacancies.GetAllVacaniesByCategory(cat, exp);
         }
     }
 }
