@@ -18,7 +18,7 @@ public class DjinniController : ControllerBase
     }
 
     [HttpGet(Name = "GetAllDjinniVacanciesByCategory")]
-    public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories cat, YearsOfExperience exp)
+    public async Task<IEnumerable<ShortVacancy>> GetAllVacanciesByCategory(Categories cat, YearsOfExperience exp)
     {
         return await DjinniVacancies.GetAllVacancies(cat, exp);
     }
