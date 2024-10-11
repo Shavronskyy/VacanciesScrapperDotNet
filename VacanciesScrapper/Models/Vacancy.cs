@@ -1,10 +1,12 @@
-namespace VacanciesScrapper.Models;
+﻿namespace VacanciesScrapper.Models;
 
 public class Vacancy
 {
     public string Title { get; set; }
 
     public string Description { get; set; }
+    
+    public string shortDescription { get; set; }
     
     public string Company { get; set; }
 		

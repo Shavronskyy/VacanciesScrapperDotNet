@@ -13,7 +13,7 @@ namespace VacanciesScrapper.Services
 			
 		}
 
-		public async static Task<IEnumerable<ShortVacancy>> GetAllVacancies(Categories cat, YearsOfExperience? exp)
+		public async static Task<IEnumerable<Vacancy>> GetAllVacancies(Categories cat, YearsOfExperience? exp)
 		{
 
 			HttpClient client = new();
@@ -41,7 +41,7 @@ namespace VacanciesScrapper.Services
 
 			var nodes = document.DocumentNode.SelectNodes("//ul[@class='list-unstyled list-jobs mb-4']/li[@class='mb-4']");
 
-            var result = new List<ShortVacancy>();
+            var result = new List<Vacancy>();
             foreach (var node in nodes)
             {
 	            var salaryNode = node.SelectSingleNode(".//h3[@class='mb-2']/strong[@class='text-success']/span[@class='public-salary-item']");
@@ -60,11 +60,11 @@ namespace VacanciesScrapper.Services
                 CodeCleaner.ScrubHtml(ref company);
                 CodeCleaner.ScrubHtml(ref salary);
 
-                result.Add(new ShortVacancy
+                result.Add(new Vacancy
                 {
                     Title = title,
                     Location = location,
-                    ShortDescription = shortDescription,
+                    shortDescription = shortDescription,
                     Company = company,
                     Link = "djinni.co" + link,
                     Salary = salary,

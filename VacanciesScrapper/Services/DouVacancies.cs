@@ -16,7 +16,7 @@ namespace VacanciesScrapper.Services
 		{
 		}
 
-        public async static Task<IEnumerable<ShortVacancy>> GetShortVacanciesByCategory(Categories cat, YearsOfExperience? exp)
+        public async static Task<IEnumerable<Vacancy>> GetShortVacanciesByCategory(Categories cat, YearsOfExperience? exp)
         {
             _client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
             
@@ -40,7 +40,7 @@ namespace VacanciesScrapper.Services
 
             var nodes = document.DocumentNode.SelectNodes("//li[@class='l-vacancy']");
 
-            var shortVacancy = new List<ShortVacancy>();
+            var shortVacancy = new List<Vacancy>();
             foreach (var node in nodes)
             {
                 var salaryNode = node.SelectSingleNode(".//div[@class='title']/span[@class='salary']");
@@ -51,9 +51,8 @@ namespace VacanciesScrapper.Services
                 var shortDescription = node.SelectSingleNode(".//div[@class='sh-info']").InnerText.Trim();
                 var company = node.SelectSingleNode(".//div[@class='title']/strong/a[@class='company']").InnerText.Trim();
                 var link = node.SelectSingleNode(".//div[@class='title']/a[@class='vt']").Attributes["href"].Value;
-                var companyImgNode = node.SelectSingleNode(".//div[@class='title']/strong/a[@class='company']/img").Attributes["src"].Value;
-                var companyImg = companyImgNode is null ? string.Empty : companyImgNode;
-                var fullVacancy = await GetFullVacancy(link);
+                var companyImgNode = node.SelectSingleNode(".//div[@class='title']/strong/a[@class='company']/img");
+                var companyImg = companyImgNode is null ? string.Empty : companyImgNode.Attributes["src"].Value;
 
                 CodeCleaner.ScrubHtml(ref title);
                 CodeCleaner.ScrubHtml(ref location);
@@ -61,24 +60,24 @@ namespace VacanciesScrapper.Services
                 CodeCleaner.ScrubHtml(ref company);
                 CodeCleaner.ScrubHtml(ref salary);
 
-                shortVacancy.Add(new ShortVacancy
+                shortVacancy.Add(new Vacancy
                 {
                     CreationDate = date,
                     Title = title,
                     Location = location,
-                    ShortDescription = shortDescription,
+                    shortDescription = shortDescription,
                     Company = company,
                     Link = link,
                     Salary = salary,
                     CompanyImg = companyImg,
-                    Description = fullVacancy.Description
+                    //Description = await GetFullDescription(link)
                 });
             }
 
             return shortVacancy;
         }
 
-        private static async Task<Vacancy> GetFullVacancy(string vacancyLink)
+        private static async Task<string> GetFullDescription(string vacancyLink)
         {
             
             _client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
@@ -93,33 +92,22 @@ namespace VacanciesScrapper.Services
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(pageContent);
             
-            var fullPageNodes = document.DocumentNode.SelectNodes(".//div[@class='l-vacancy']");
             var descriptionNodes = document.DocumentNode.SelectNodes(".//div[@class='l-vacancy']/div[@class='b-typo vacancy-section']");
-
-            Vacancy fullVacancy = new();
             
-            foreach (var node in descriptionNodes)
+            var description = string.Empty;
+            
+            var innerTexts = descriptionNodes.Descendants()
+                .Where(n => n.NodeType == HtmlNodeType.Text && !string.IsNullOrWhiteSpace(n.InnerText))
+                .Select(n => n.InnerText.Trim());
+
+            foreach (var text in innerTexts)
             {
-                var pNodes = node.SelectNodes(".//p");
-                var h3nodes = node.SelectNodes(".//h3[@class='g-h3']");
-                
-                var description = "";
-                
-                if (descriptionNodes is not null)
-                {
-                    foreach (var p in pNodes)
-                    {
-                        description += p.InnerText + "\n";
-                    }
-                }
-                
-                //CodeCleaner.ScrubHtml(ref titleOfDescription);
-                CodeCleaner.ScrubHtml(ref description);
-                
-                fullVacancy.Description += /*titleOfDescription + "\n" + */ description + "\n";
+                description += text + "\n";
             }
             
-            return fullVacancy;
+            CodeCleaner.ScrubHtml(ref description);
+            
+            return description;
         }
     }
 }
