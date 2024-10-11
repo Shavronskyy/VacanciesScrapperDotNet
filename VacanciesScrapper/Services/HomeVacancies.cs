@@ -1,5 +1,6 @@
 ﻿using System;
 using VacanciesScrapper.Enums;
+using VacanciesScrapper.Models;
 
 namespace VacanciesScrapper.Services
 {
@@ -10,12 +11,12 @@ namespace VacanciesScrapper.Services
 			
 		}
 
-		public async Task<IEnumerable<string>> GetAllVacaniesByCategory(Categories cat, YearsOfExperience exp)
+		public static async Task<IEnumerable<Vacancy>> GetAllVacaniesByCategory(Categories cat, YearsOfExperience exp)
 		{
-			//var douVacancies = await DouVacancies.GetAllVacanciesByCategory(cat, exp);
-			//var djinniVacancies = await DjinniVacancies.GetAllVacancies(cat, exp);
-
-			return default;
+			var douVacancies = await DouVacancies.GetShortVacanciesByCategory(cat, exp);
+			var djinniVacancies = await DjinniVacancies.GetAllVacancies(cat, exp);
+			
+			return douVacancies.Concat(djinniVacancies);
 		}
 	}
 }
