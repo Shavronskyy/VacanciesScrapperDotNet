@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using VacanciesScrapper.Enums;
@@ -9,18 +10,16 @@ using VacanciesScrapper.Utils;
 namespace VacanciesScrapper.Services
 {
 	public class DouVacancies
-	{
+    {
+        private static HttpClient _client = new();
 		public DouVacancies()
 		{
 		}
 
-        public async static Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories cat, YearsOfExperience? exp)
+        public async static Task<IEnumerable<Vacancy>> GetShortVacanciesByCategory(Categories cat, YearsOfExperience? exp)
         {
-
-            HttpClient client = new();
-
-            client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
-
+            _client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
+            
             var url = "https://jobs.dou.ua/" + CategoriesDou.GetCategory(cat);
 
             if(exp is not null)
@@ -28,7 +27,7 @@ namespace VacanciesScrapper.Services
                 url += CategoriesDou.GetExperience(exp);
             }
 
-            HttpResponseMessage response = await client.GetAsync(url);
+            HttpResponseMessage response = await _client.GetAsync(url);
             response.EnsureSuccessStatusCode(); // Throw if not a success code
 
             // Get the response content as a string
@@ -41,7 +40,7 @@ namespace VacanciesScrapper.Services
 
             var nodes = document.DocumentNode.SelectNodes("//li[@class='l-vacancy']");
 
-            var result = new List<Vacancy>();
+            var shortVacancy = new List<Vacancy>();
             foreach (var node in nodes)
             {
                 var salaryNode = node.SelectSingleNode(".//div[@class='title']/span[@class='salary']");
@@ -52,8 +51,8 @@ namespace VacanciesScrapper.Services
                 var shortDescription = node.SelectSingleNode(".//div[@class='sh-info']").InnerText.Trim();
                 var company = node.SelectSingleNode(".//div[@class='title']/strong/a[@class='company']").InnerText.Trim();
                 var link = node.SelectSingleNode(".//div[@class='title']/a[@class='vt']").Attributes["href"].Value;
-                var companyImgNode = node.SelectSingleNode(".//div[@class='title']/strong/a[@class='company']/img").Attributes["src"].Value;
-                var companyImg = companyImgNode is null ? string.Empty : companyImgNode;
+                var companyImgNode = node.SelectSingleNode(".//div[@class='title']/strong/a[@class='company']/img");
+                var companyImg = companyImgNode is null ? string.Empty : companyImgNode.Attributes["src"].Value;
 
                 CodeCleaner.ScrubHtml(ref title);
                 CodeCleaner.ScrubHtml(ref location);
@@ -61,20 +60,54 @@ namespace VacanciesScrapper.Services
                 CodeCleaner.ScrubHtml(ref company);
                 CodeCleaner.ScrubHtml(ref salary);
 
-                result.Add(new Vacancy
+                shortVacancy.Add(new Vacancy
                 {
                     CreationDate = date,
                     Title = title,
                     Location = location,
-                    ShortDescription = shortDescription,
+                    shortDescription = shortDescription,
                     Company = company,
                     Link = link,
                     Salary = salary,
-                    CompanyImg = companyImg
+                    CompanyImg = companyImg,
+                    //Description = await GetFullDescription(link)
                 });
             }
 
-            return result;
+            return shortVacancy;
+        }
+
+        private static async Task<string> GetFullDescription(string vacancyLink)
+        {
+            
+            _client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
+            
+            HttpResponseMessage response = await _client.GetAsync(vacancyLink);
+            response.EnsureSuccessStatusCode(); // Throw if not a success code
+
+            // Get the response content as a string
+            string pageContent = await response.Content.ReadAsStringAsync();
+                
+            // Load the page content into an HtmlDocument
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(pageContent);
+            
+            var descriptionNodes = document.DocumentNode.SelectNodes(".//div[@class='l-vacancy']/div[@class='b-typo vacancy-section']");
+            
+            var description = string.Empty;
+            
+            var innerTexts = descriptionNodes.Descendants()
+                .Where(n => n.NodeType == HtmlNodeType.Text && !string.IsNullOrWhiteSpace(n.InnerText))
+                .Select(n => n.InnerText.Trim());
+
+            foreach (var text in innerTexts)
+            {
+                description += text + "\n";
+            }
+            
+            CodeCleaner.ScrubHtml(ref description);
+            
+            return description;
         }
     }
 }
