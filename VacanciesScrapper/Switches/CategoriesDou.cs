@@ -60,14 +60,19 @@ namespace VacanciesScrapper.Switches
             {
                 case YearsOfExperience.LessThanOne:
                     return "&exp=0-1";
+
                 case YearsOfExperience.FromOneToThree:
                     return "&exp=1-3";
+
                 case YearsOfExperience.FromThreeToFive:
                     return "&exp=3-5";
+
                 case YearsOfExperience.FivePlus:
                     return "&exp=5plus";
+                default:
+                    return "";
             }
-            return "not found";
+            return "";
         }
     }
 }

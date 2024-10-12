@@ -1,0 +1,21 @@
+﻿@model List<VacanciesScrapper_Web.Models.VacancyViewModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vacancy in Model)
+        {
+            <tr>
+                <td>@vacancy.Title</td>
+                <td>@vacancy.Description</td>
+                <td>@vacancy.Location</td>
+            </tr>
+        }
+    </tbody>
+</table>
