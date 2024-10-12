@@ -7,6 +7,9 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        Environment.SetEnvironmentVariable("GROQ_APIKEY", builder.Configuration.GetSection("Groq").GetSection("APIKEY").Value);
+        Environment.SetEnvironmentVariable("GROQ_MODEL", builder.Configuration.GetSection("Groq").GetSection("Model").Value);
+        
         // Add services to the container.
 
         builder.Services.AddControllers();
