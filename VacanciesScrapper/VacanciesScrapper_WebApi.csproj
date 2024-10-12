@@ -9,6 +9,9 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
+    <PackageReference Include="GroqSharp" Version="1.1.2" />
+    <PackageReference Include="itext7" Version="8.0.5" />
+    <PackageReference Include="OpenAI" Version="2.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.64" />
   </ItemGroup>
@@ -21,7 +24,6 @@
     <None Remove="Utils\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
     <Folder Include="Switches\" />
     <Folder Include="Enums\" />
     <Folder Include="Utils\" />
