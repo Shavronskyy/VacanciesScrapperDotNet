@@ -5,6 +5,7 @@ namespace VacanciesScrapper.Enums
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum YearsOfExperience
 	{
+        None,
         LessThanOne,
         FromOneToThree,
         FromThreeToFive,

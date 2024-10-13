@@ -10,10 +10,12 @@ namespace VacanciesScrapper.Switches
 
 		}
 
-		public static string GetCategory(Categories cat)
+		public static string GetCategory(Categories? cat)
 		{
 			switch (cat)
 			{
+				case Categories.None:
+					return "";
 				case Categories.DOTNET:
 					return "?primary_keyword=.NET";
 				case Categories.Angular:
@@ -54,15 +56,17 @@ namespace VacanciesScrapper.Switches
 					return "?primary_keyword=Scala";
 				case Categories.Kotlin:
 					return "?primary_keyword=Kotlin";
+				default:
+					return "";
             }
-
-			return "notfound";
 		}
 
         public static string GetExperience(YearsOfExperience? exp)
         {
             switch (exp)
             {
+				case YearsOfExperience.None:
+					return "";
                 case YearsOfExperience.LessThanOne:
                     return "&exp_level=no_exp";
                 case YearsOfExperience.FromOneToThree:
@@ -71,8 +75,9 @@ namespace VacanciesScrapper.Switches
                     return "&exp_level=3y&exp_level=4y&exp_level=5y";
                 case YearsOfExperience.FivePlus:
                     return "&exp_level=5y&exp_level=6y&exp_level=7y&exp_level=8y&exp_level=9y&exp_level=10y";
+				default:
+					return "";
             }
-            return "not found";
         }
     }
 }

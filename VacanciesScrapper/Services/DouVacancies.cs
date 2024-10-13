@@ -16,16 +16,11 @@ namespace VacanciesScrapper.Services
 		{
 		}
 
-        public async static Task<IEnumerable<Vacancy>> GetShortVacanciesByCategory(Categories cat, YearsOfExperience? exp)
+        public async static Task<IEnumerable<Vacancy>> GetShortVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
             _client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
-            
-            var url = "https://jobs.dou.ua/" + CategoriesDou.GetCategory(cat);
 
-            if(exp is not null)
-            {
-                url += CategoriesDou.GetExperience(exp);
-            }
+            var url = "https://jobs.dou.ua/" + CategoriesDou.GetCategory(cat) + CategoriesDou.GetExperience(exp);
 
             HttpResponseMessage response = await _client.GetAsync(url);
             response.EnsureSuccessStatusCode(); // Throw if not a success code
@@ -52,7 +47,7 @@ namespace VacanciesScrapper.Services
                 var company = node.SelectSingleNode(".//div[@class='title']/strong/a[@class='company']").InnerText.Trim();
                 var link = node.SelectSingleNode(".//div[@class='title']/a[@class='vt']").Attributes["href"].Value;
                 var companyImgNode = node.SelectSingleNode(".//div[@class='title']/strong/a[@class='company']/img");
-                var companyImg = companyImgNode is null ? string.Empty : companyImgNode.Attributes["src"].Value;
+                var companyImg = companyImgNode is null ? "https://ui-avatars.com/api/?name=" + company : companyImgNode.Attributes["src"].Value;
 
                 CodeCleaner.ScrubHtml(ref title);
                 CodeCleaner.ScrubHtml(ref location);
