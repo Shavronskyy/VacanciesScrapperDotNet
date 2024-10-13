@@ -19,5 +19,7 @@
         public string CreationDate { get; set; }
 
         public string Link { get; set; }
+
+        public string fitByCv { get; set; }
     }
 }

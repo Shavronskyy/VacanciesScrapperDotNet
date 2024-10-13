@@ -22,17 +22,7 @@ namespace VacanciesScrapper_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            List<VacancyViewModel> Fakevacancies = new();
-            for(int i = 0; i < 5; i++)
-            {
-                Fakevacancies.Add(new VacancyViewModel
-                {
-                    Title = "fakevacancy" + i,
-                    Description = "fakedescription" + i,
-                    Location = "fakelocation" + i
-                });
-            }
-            HttpResponseMessage response = _client.GetAsync("api/Djinni/GetAllVacanciesByCategory").Result;
+            HttpResponseMessage response = _client.GetAsync("api/Djinni/GetAllVacanciesByCategory?cat=DOTNET&exp=LessThanOne").Result;
 
             if(response.IsSuccessStatusCode)
             {
@@ -40,7 +30,7 @@ namespace VacanciesScrapper_Web.Controllers
                 return View(result);
             }
 
-            return View(Fakevacancies);
+            return View(new List<VacancyViewModel>());
         }
     }
 }
