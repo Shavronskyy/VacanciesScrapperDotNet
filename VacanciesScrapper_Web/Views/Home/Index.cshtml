@@ -1,21 +1,27 @@
 ﻿@model List<VacanciesScrapper_Web.Models.VacancyViewModel>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Location</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var vacancy in Model)
-        {
-            <tr>
-                <td>@vacancy.Title</td>
-                <td>@vacancy.Description</td>
-                <td>@vacancy.Location</td>
-            </tr>
-        }
-    </tbody>
-</table>
+@foreach (var vacancy in Model)
+{
+    <div style="border: 1px solid #ccc; padding: 16px; margin-bottom: 20px; width: 100%; max-width: 600px;">
+        <!-- Company Name and Image -->
+        <div style="display: flex; align-items: center;">
+            <img src="@vacancy.CompanyImg" alt="Company Logo" style="width: 50px; height: 50px; margin-right: 10px;">
+            <div>
+                <strong>Company:</strong> @vacancy.Company<br>
+                <strong>Location:</strong> @vacancy.Location<br>
+                <!--<strong>Posted:</strong> October 10, 2024-->
+            </div>
+        </div>
+
+        <!-- Title and Salary -->
+        <div style="margin-top: 10px;">
+            <strong>Title:</strong> @vacancy.Title<br>
+            <strong>Salary:</strong> @vacancy.Salary
+        </div>
+
+        <!-- Short Description -->
+        <div style="margin-top: 10px;">
+            <strong>Description:</strong> @vacancy.shortDescription
+        </div>
+    </div>
+}

@@ -5,10 +5,12 @@ namespace VacanciesScrapper.Switches
 {
 	public class CategoriesDou
 	{
-        public static string GetCategory(Categories cat)
+        public static string GetCategory(Categories? cat)
         {
             switch (cat)
             {
+                case Categories.None:
+                    return "";
                 case Categories.DOTNET:
                     return "vacancies/?category=.NET";
                 case Categories.Angular:
@@ -49,15 +51,18 @@ namespace VacanciesScrapper.Switches
                     return "vacancies/?category=Scala";
                 case Categories.Kotlin:
                     return "vacancies/?category=Kotlin";
+                default:
+                    return "";
             }
-
-            return "notfound";
         }
 
         public static string GetExperience(YearsOfExperience? exp)
         {
             switch (exp)
             {
+                case YearsOfExperience.None:
+                    return "";
+
                 case YearsOfExperience.LessThanOne:
                     return "&exp=0-1";
 
@@ -72,7 +77,6 @@ namespace VacanciesScrapper.Switches
                 default:
                     return "";
             }
-            return "";
         }
     }
 }
