@@ -1,27 +1,144 @@
 ﻿@model List<VacanciesScrapper_Web.Models.VacancyViewModel>
 
-@foreach (var vacancy in Model)
-{
-    <div style="border: 1px solid #ccc; padding: 16px; margin-bottom: 20px; width: 100%; max-width: 600px;">
-        <!-- Company Name and Image -->
-        <div style="display: flex; align-items: center;">
-            <img src="@vacancy.CompanyImg" alt="Company Logo" style="width: 50px; height: 50px; margin-right: 10px;">
-            <div>
-                <strong>Company:</strong> @vacancy.Company<br>
-                <strong>Location:</strong> @vacancy.Location<br>
-                <!--<strong>Posted:</strong> October 10, 2024-->
-            </div>
-        </div>
+<style>
+    .vacancy-block {
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        max-width: 1200px;
+        font-family: Arial, sans-serif;
+    }
 
-        <!-- Title and Salary -->
-        <div style="margin-top: 10px;">
-            <strong>Title:</strong> @vacancy.Title<br>
-            <strong>Salary:</strong> @vacancy.Salary
-        </div>
+    .vacancy-header {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
 
-        <!-- Short Description -->
-        <div style="margin-top: 10px;">
-            <strong>Description:</strong> @vacancy.shortDescription
+        .vacancy-header img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .vacancy-header div {
+            font-size: 14px;
+        }
+
+            .vacancy-header div strong {
+                display: block;
+                font-size: 16px;
+                color: #333;
+            }
+
+    .vacancy-title-salary {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+        .vacancy-title-salary strong {
+            color: #007BFF;
+            font-size: 18px;
+        }
+
+    .vacancy-description {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .chooser {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background-color: #f7f7f7;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+        .chooser select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+
+        .chooser button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .chooser button:hover {
+                background-color: #0056b3;
+            }
+</style>
+<div class="row">
+    <div class="mx-auto">
+        <h1 class="text-center">Junior's tears</h1>
+        <h3 class="text-center">Vacancies for junior software developers. With love</h3>
+    </div>
+    <div class="chooser mx-auto">
+        <!-- Category Selector -->
+        <div class="mx-auto">
+            <label for="category-select"><strong>Category:</strong></label>
+            <select id="category-select">
+                <option value="None">------</option>
+                <option value=".NET">.NET</option>
+                <option value="JAVA">Java</option>
+                <option value="React">React</option>
+                <option value="Js">Java Script</option>
+                <option value="C++">C++</option>
+            </select>
+            <label for="category-select"><strong>Experience:</strong></label>
+            <select id="category-select">
+                <option value="None">------</option>
+                <option value="LessThanOne">LessThanOne</option>
+                <option value="FromOneToThree">FromOneToThree</option>
+                <option value="FromThreeToFive">FromThreeToFive</option>
+                <option value="FivePlus">FivePlus</option>
+            </select>
         </div>
     </div>
-}
+    <div>
+        @foreach (var vacancy in Model)
+        {
+            <div class="vacancy-block">
+                <!-- Company Name and Image -->
+                <div class="vacancy-header">
+                    <img src="@vacancy.CompanyImg" alt="Company Logo" style="width: 50px; height: 50px; margin-right: 10px;">
+                    <div>
+                        <strong>Company:</strong> @vacancy.Company
+                        <strong>Location:</strong> @vacancy.Location<br>
+                        <!--<strong>Posted:</strong> October 10, 2024-->
+                    </div>
+                </div>
+
+                <!-- Title and Salary -->
+                <div class="vacancy-title-salary">
+                    <strong>Title:</strong> @vacancy.Title<br>
+                    <strong>Salary:</strong> @vacancy.Salary
+                </div>
+
+                <!-- Short Description -->
+                <div class="vacancy-description">
+                    <strong>Description:</strong> @vacancy.shortDescription<br />
+                    <strong>AI: fit for you by CV on @vacancy.fitByCv</strong>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

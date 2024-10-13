@@ -47,7 +47,8 @@ namespace VacanciesScrapper.Services
 				var companyImgNode = node.SelectSingleNode(".//img[@class='userpic-image userpic-image_img']");
                 var companyImg = companyImgNode is null ? "https://ui-avatars.com/api/?name=" + company : companyImgNode.Attributes["src"].Value; 
                 //var date = await GetVacancyCreationDate(link);
-                //var fullDescription = await GetFullDescription(link);
+                var fullDescription = await GetFullDescription(link);
+				var fit = await AnalyzingVacancyByAI(fullDescription);
 
                 CodeCleaner.ScrubHtml(ref title);
                 CodeCleaner.ScrubHtml(ref location);
@@ -64,6 +65,7 @@ namespace VacanciesScrapper.Services
                     Link = link,
                     Salary = salary,
                     CompanyImg = companyImg,
+					fitByCv = fit,
                     //CreationDate = date,
                     //Description = fullDescription
                 });
@@ -71,6 +73,11 @@ namespace VacanciesScrapper.Services
 
             return result;
         }
+
+		private static async Task<string> AnalyzingVacancyByAI(string fullDescription)
+		{
+			return await AIAnalyzerService.AnalyzeVacancyAnswerInPrecents(fullDescription);
+		}
 
 		public static async Task<string> GetFullDescription(string vacancyLink)
 		{

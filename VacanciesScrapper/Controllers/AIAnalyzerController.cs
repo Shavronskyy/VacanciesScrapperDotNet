@@ -17,6 +17,6 @@ public class AIAnalyzerController : ControllerBase
     [HttpGet(Name = "AnalyzeVacancy")]
     public async Task<string> AnalyzerVacancy()
     {
-        return await AIAnalyzerService.AnalyzeVacancyAnswerInPrecents();
+        return default; //await AIAnalyzerService.AnalyzeVacancyAnswerInPrecents();
     }
 }
