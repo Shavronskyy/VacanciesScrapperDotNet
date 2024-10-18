@@ -9,30 +9,19 @@ namespace VacanciesScrapper.Services
 {
 	public class DjinniVacanciesService : IDjinniVacanciesService
 	{
-		private static HttpClient _client;
+		private IScrapperService _scrapperService;
 		
-		static DjinniVacanciesService()
+		public DjinniVacanciesService(IScrapperService scrapperService)
 		{
-			_client = new();
-			_client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
+			_scrapperService = scrapperService;
 		}
 
 		public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
 		{
 			var url = "https://djinni.co/jobs/" + CategoriesDjinni.GetCategory(cat) + CategoriesDjinni.GetExperience(exp);
 
-            HttpResponseMessage response = await _client.GetAsync(url);
-            response.EnsureSuccessStatusCode(); // Throw if not a success code
-
-            // Get the response content as a string
-            string pageContent = await response.Content.ReadAsStringAsync();
-
-            // Load the page content into an HtmlDocument
-            HtmlDocument document = new HtmlDocument();
-            document.LoadHtml(pageContent);
-
-
-
+			var document = await _scrapperService.GetHtml(url);
+			
 			var nodes = document.DocumentNode.SelectNodes("//ul[@class='list-unstyled list-jobs mb-4']/li[@class='mb-4']");
 
             var result = new List<Vacancy>();
@@ -80,19 +69,10 @@ namespace VacanciesScrapper.Services
 			return await AIAnalyzerService.AnalyzeVacancyAnswerInPrecents(fullDescription);
 		}
 
-		public static async Task<string> GetFullDescription(string vacancyLink)
+		public async Task<string> GetFullDescription(string url)
 		{
+			var document = await _scrapperService.GetHtml(url);
 			
-			HttpResponseMessage response = await _client.GetAsync(vacancyLink);
-			response.EnsureSuccessStatusCode(); // Throw if not a success code
-
-			// Get the response content as a string
-			string pageContent = await response.Content.ReadAsStringAsync();
-                
-			// Load the page content into an HtmlDocument
-			HtmlDocument document = new HtmlDocument();
-			document.LoadHtml(pageContent);
-            
 			var descriptionNodes = document.DocumentNode.SelectSingleNode(".//div[@class='mb-4 job-post__description']");
 			
 			var description = string.Empty;
