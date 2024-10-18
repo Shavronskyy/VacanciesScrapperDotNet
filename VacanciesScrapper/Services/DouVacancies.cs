@@ -11,15 +11,15 @@ namespace VacanciesScrapper.Services
 {
 	public class DouVacancies
     {
-        private static HttpClient _client = new();
-		public DouVacancies()
-		{
+        private static HttpClient _client;
+		static DouVacancies()
+        {
+            _client = new();
+            _client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
 		}
 
         public async static Task<IEnumerable<Vacancy>> GetShortVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
-            _client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
-
             var url = "https://jobs.dou.ua/" + CategoriesDou.GetCategory(cat) + CategoriesDou.GetExperience(exp);
 
             HttpResponseMessage response = await _client.GetAsync(url);
@@ -74,9 +74,6 @@ namespace VacanciesScrapper.Services
 
         private static async Task<string> GetFullDescription(string vacancyLink)
         {
-            
-            _client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
-            
             HttpResponseMessage response = await _client.GetAsync(vacancyLink);
             response.EnsureSuccessStatusCode(); // Throw if not a success code
 
