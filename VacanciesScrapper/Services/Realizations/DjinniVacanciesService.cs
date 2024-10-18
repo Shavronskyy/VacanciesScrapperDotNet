@@ -1,37 +1,29 @@
 ﻿using HtmlAgilityPack;
 using VacanciesScrapper.Enums;
 using VacanciesScrapper.Models;
+using VacanciesScrapper.Services.Interfaces;
 using VacanciesScrapper.Switches;
 using VacanciesScrapper.Utils;
 
 namespace VacanciesScrapper.Services
 {
-	public class DjinniVacancies
+	public class DjinniVacanciesService : IDjinniVacanciesService
 	{
-		public DjinniVacancies()
+		private IScrapperService _scrapperService;
+		private IAIAnalyzerService _aiService;
+		
+		public DjinniVacanciesService(IScrapperService scrapperService, IAIAnalyzerService aiService)
 		{
-			
+			_scrapperService = scrapperService;
+			_aiService = aiService;
 		}
 
-		public async static Task<IEnumerable<Vacancy>> GetAllVacancies(Categories? cat, YearsOfExperience? exp)
+		public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
 		{
-			HttpClient client = new();
-			client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
-
 			var url = "https://djinni.co/jobs/" + CategoriesDjinni.GetCategory(cat) + CategoriesDjinni.GetExperience(exp);
 
-            HttpResponseMessage response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode(); // Throw if not a success code
-
-            // Get the response content as a string
-            string pageContent = await response.Content.ReadAsStringAsync();
-
-            // Load the page content into an HtmlDocument
-            HtmlDocument document = new HtmlDocument();
-            document.LoadHtml(pageContent);
-
-
-
+			var document = await _scrapperService.GetHtml(url);
+			
 			var nodes = document.DocumentNode.SelectNodes("//ul[@class='list-unstyled list-jobs mb-4']/li[@class='mb-4']");
 
             var result = new List<Vacancy>();
@@ -74,26 +66,15 @@ namespace VacanciesScrapper.Services
             return result;
         }
 
-		private static async Task<int> AnalyzingVacancyByAI(string fullDescription)
+		private async Task<int> AnalyzingVacancyByAI(string fullDescription)
 		{
-			return await AIAnalyzerService.AnalyzeVacancyAnswerInPrecents(fullDescription);
+			return await _aiService.AnalyzeVacancyAnswerInPrecents(fullDescription);
 		}
 
-		public static async Task<string> GetFullDescription(string vacancyLink)
+		private async Task<string> GetFullDescription(string url)
 		{
-			HttpClient client = new();
+			var document = await _scrapperService.GetHtml(url);
 			
-			client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
-			HttpResponseMessage response = await client.GetAsync(vacancyLink);
-			response.EnsureSuccessStatusCode(); // Throw if not a success code
-
-			// Get the response content as a string
-			string pageContent = await response.Content.ReadAsStringAsync();
-                
-			// Load the page content into an HtmlDocument
-			HtmlDocument document = new HtmlDocument();
-			document.LoadHtml(pageContent);
-            
 			var descriptionNodes = document.DocumentNode.SelectSingleNode(".//div[@class='mb-4 job-post__description']");
 			
 			var description = string.Empty;
@@ -111,27 +92,6 @@ namespace VacanciesScrapper.Services
             
 			return description;
 		}
-
-		//private static async Task<string> GetVacancyCreationDate(string vacancyLink)
-		//{
-		//	HttpClient client = new();
-			
-		//	client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
-		//	HttpResponseMessage response = await client.GetAsync(vacancyLink);
-		//	response.EnsureSuccessStatusCode(); // Throw if not a success code
-
-		//	// Get the response content as a string
-		//	string pageContent = await response.Content.ReadAsStringAsync();
-                
-		//	// Load the page content into an HtmlDocument
-		//	HtmlDocument document = new HtmlDocument();
-		//	document.LoadHtml(pageContent);
-            
-		//	var vacancyNodes = document.DocumentNode.SelectSingleNode(".//div[@id='job-publication-info']/div/span").InnerText;
-		//	CodeCleaner.ScrubHtml(ref vacancyNodes);
-			
-		//	return vacancyNodes;
-		//}
 	}
 }
 

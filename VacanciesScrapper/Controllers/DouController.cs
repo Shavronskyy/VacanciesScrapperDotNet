@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using VacanciesScrapper.Enums;
 using VacanciesScrapper.Services;
 using VacanciesScrapper.Models;
+using VacanciesScrapper.Services.Interfaces;
 
 namespace VacanciesScrapper.Controllers
 {
@@ -12,17 +13,19 @@ namespace VacanciesScrapper.Controllers
     public class DouController : ControllerBase
     {
 
-        private readonly ILogger<DjinniController> _logger;
+        private readonly ILogger<DouController> _logger;
+        private IDouVacanciesService _douService;
 
-        public DouController(ILogger<DjinniController> logger)
+        public DouController(ILogger<DouController> logger, IDouVacanciesService douService)
         {
             _logger = logger;
+            _douService = douService;
         }
 
         [HttpGet(Name = "GetAllDouVacanciesByCategory")]
         public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
-            return await DouVacancies.GetShortVacanciesByCategory(cat, exp);
+            return await _douService.GetAllVacanciesByCategory(cat, exp);
         }
     }
 }

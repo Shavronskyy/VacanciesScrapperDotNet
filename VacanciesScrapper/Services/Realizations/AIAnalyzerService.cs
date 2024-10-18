@@ -2,12 +2,13 @@
 using GroqSharp.Models;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
+using VacanciesScrapper.Services.Interfaces;
 
 namespace VacanciesScrapper.Services;
 
-public class AIAnalyzerService
+public class AIAnalyzerService : IAIAnalyzerService
 {
-    public static async Task<int> AnalyzeVacancyAnswerInPrecents(string description)
+    public async Task<int> AnalyzeVacancyAnswerInPrecents(string description)
     {
         var apiKey = Environment.GetEnvironmentVariable("GROQ_APIKEY");
         var apiModel = Environment.GetEnvironmentVariable("GROQ_MODEL");

@@ -4,35 +4,27 @@ using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using VacanciesScrapper.Enums;
 using VacanciesScrapper.Models;
+using VacanciesScrapper.Services.Interfaces;
 using VacanciesScrapper.Switches;
 using VacanciesScrapper.Utils;
 
 namespace VacanciesScrapper.Services
 {
-	public class DouVacancies
+	public class DouVacanciesService : IDouVacanciesService
     {
-        private static HttpClient _client = new();
-		public DouVacancies()
-		{
-		}
-
-        public async static Task<IEnumerable<Vacancy>> GetShortVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
+        private IScrapperService _scrapperService;
+        
+		public DouVacanciesService(IScrapperService scrapperService)
         {
-            _client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
+            _scrapperService = scrapperService;
+        }
 
+        public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
+        {
             var url = "https://jobs.dou.ua/" + CategoriesDou.GetCategory(cat) + CategoriesDou.GetExperience(exp);
 
-            HttpResponseMessage response = await _client.GetAsync(url);
-            response.EnsureSuccessStatusCode(); // Throw if not a success code
-
-            // Get the response content as a string
-            string pageContent = await response.Content.ReadAsStringAsync();
-                
-            // Load the page content into an HtmlDocument
-            HtmlDocument document = new HtmlDocument();
-            document.LoadHtml(pageContent);
-
-
+            var document = await _scrapperService.GetHtml(url);
+            
             var nodes = document.DocumentNode.SelectNodes("//li[@class='l-vacancy']");
 
             var shortVacancy = new List<Vacancy>();
@@ -72,20 +64,9 @@ namespace VacanciesScrapper.Services
             return shortVacancy;
         }
 
-        private static async Task<string> GetFullDescription(string vacancyLink)
+        private async Task<string> GetFullDescription(string url)
         {
-            
-            _client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
-            
-            HttpResponseMessage response = await _client.GetAsync(vacancyLink);
-            response.EnsureSuccessStatusCode(); // Throw if not a success code
-
-            // Get the response content as a string
-            string pageContent = await response.Content.ReadAsStringAsync();
-                
-            // Load the page content into an HtmlDocument
-            HtmlDocument document = new HtmlDocument();
-            document.LoadHtml(pageContent);
+            var document = await _scrapperService.GetHtml(url);
             
             var descriptionNodes = document.DocumentNode.SelectNodes(".//div[@class='l-vacancy']/div[@class='b-typo vacancy-section']");
             
