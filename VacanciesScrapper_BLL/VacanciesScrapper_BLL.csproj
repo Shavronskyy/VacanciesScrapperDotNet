@@ -7,9 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentResults" Version="3.16.0" />
     <PackageReference Include="GroqSharp" Version="1.1.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.64" />
     <PackageReference Include="itext" Version="8.0.5" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MediatR\AI\" />
+    <Folder Include="MediatR\JobSites\DOU\" />
+    <Folder Include="MediatR\Scrapper\" />
+    <Folder Include="MediatR\AllVacancies\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="MediatR\AllVacancies\" />
+  </ItemGroup>
 </Project>

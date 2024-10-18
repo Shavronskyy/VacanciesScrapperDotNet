@@ -1,4 +1,7 @@
-﻿using VacanciesScrapper_BLL.Services.Interfaces;
+﻿using System.Reflection;
+using MediatR;
+using VacanciesScrapper_BLL.MediatR.JobSites.Djinni;
+using VacanciesScrapper_BLL.Services.Interfaces;
 using VacanciesScrapper_BLL.Services.Realizations;
 
 namespace VacanciesScrapper_WebApi;
@@ -18,7 +21,17 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        
+
+        var currentAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+        // TODO: refactor that to one command
+
+        builder.Services.AddMediatR(conf =>
+        {
+            conf.RegisterServicesFromAssembly(typeof(GetAllVacanciesByCategoryQuery).Assembly);
+            conf.RegisterServicesFromAssembly(typeof(GetAllVacanciesByCategoryQuery).Assembly);
+        }); 
+
         builder.Services.AddTransient<IHomeVacanciesService, HomeVacanciesService>();
         builder.Services.AddTransient<IDjinniVacanciesService, DjinniVacanciesService>();
         builder.Services.AddTransient<IDouVacanciesService, DouVacanciesService>();
