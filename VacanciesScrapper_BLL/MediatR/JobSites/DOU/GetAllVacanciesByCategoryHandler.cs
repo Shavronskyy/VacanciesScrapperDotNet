@@ -17,6 +17,6 @@ public class GetAllVacanciesByCategoryHandler : IRequestHandler<GetAllVacanciesB
 
     public async Task<Result<IEnumerable<Vacancy>>> Handle(GetAllVacanciesByCategoryQuery request, CancellationToken cancellationToken)
     {
-        return Result.Ok(await _douService.GetAllVacanciesByCategory(request.cat, request.exp));
+        return Result.Ok(await _douService.GetAllDouVacanciesByCategory(request.cat, request.exp));
     }
 }

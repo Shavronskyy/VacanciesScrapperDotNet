@@ -16,7 +16,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
             _scrapperService = scrapperService;
         }
 
-        public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
+        public async Task<IEnumerable<Vacancy>> GetAllDouVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
             var url = "https://jobs.dou.ua/" + CategoriesDou.GetCategory(cat) + CategoriesDou.GetExperience(exp);
 

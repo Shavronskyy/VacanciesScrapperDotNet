@@ -20,7 +20,7 @@ namespace VacanciesScrapper_WebApi.Controllers
         [HttpGet(Name = "GetAllDouVacanciesByCategory")]
         public async Task<IActionResult> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
-            return HandleResult(await Mediator.Send(new GetAllVacanciesByCategoryQuery(cat, exp)));
+            return HandleResult(await Mediator.Send(new GetAllDouVacanciesByCategoryQuery(cat, exp)));
         }
     }
 }

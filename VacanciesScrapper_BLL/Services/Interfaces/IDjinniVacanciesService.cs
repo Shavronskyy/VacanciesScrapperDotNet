@@ -5,5 +5,5 @@ namespace VacanciesScrapper_BLL.Services.Interfaces;
 
 public interface IDjinniVacanciesService
 {
-    Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp);
+    Task<IEnumerable<Vacancy>> GetAllDjinniVacanciesByCategory(Categories? cat, YearsOfExperience? exp);
 }

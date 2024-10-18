@@ -18,7 +18,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 			_aiService = aiService;
 		}
 
-		public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
+		public async Task<IEnumerable<Vacancy>> GetAllDjinniVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
 		{
 			var url = "https://djinni.co/jobs/" + CategoriesDjinni.GetCategory(cat) + CategoriesDjinni.GetExperience(exp);
 

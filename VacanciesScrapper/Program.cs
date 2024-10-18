@@ -28,8 +28,8 @@ public class Program
 
         builder.Services.AddMediatR(conf =>
         {
-            conf.RegisterServicesFromAssembly(typeof(GetAllVacanciesByCategoryQuery).Assembly);
-            conf.RegisterServicesFromAssembly(typeof(GetAllVacanciesByCategoryQuery).Assembly);
+            conf.RegisterServicesFromAssembly(typeof(GetAllDjinniVacanciesByCategoryQuery).Assembly);
+            conf.RegisterServicesFromAssembly(typeof(GetAllDjinniVacanciesByCategoryQuery).Assembly);
         }); 
 
         builder.Services.AddTransient<IHomeVacanciesService, HomeVacanciesService>();

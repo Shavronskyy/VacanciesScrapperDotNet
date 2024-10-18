@@ -24,7 +24,7 @@ public class DjinniController : BaseApiController
     [HttpGet(Name = "GetAllDjinniVacanciesByCategory")]
     public async Task<IActionResult> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
     {
-        return HandleResult(await Mediator.Send(new GetAllVacanciesByCategoryQuery(cat, exp)));
+        return HandleResult(await Mediator.Send(new GetAllDjinniVacanciesByCategoryQuery(cat, exp)));
     }
 }
 
