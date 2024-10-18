@@ -10,7 +10,7 @@ namespace VacanciesScrapper_Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly HttpClient _client;
-        Uri baseUri = new Uri("https://localhost:7032/");
+        Uri baseUri = new Uri("https://localhost:44382/");
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -22,9 +22,9 @@ namespace VacanciesScrapper_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            HttpResponseMessage response = _client.GetAsync("api/Djinni/GetAllVacanciesByCategory?cat=DOTNET&exp=LessThanOne").Result;
+            HttpResponseMessage response = _client.GetAsync("api/Djinni/GetAllVacanciesByCategory?cat=Node&exp=LessThanOne").Result;
 
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<List<VacancyViewModel>>();
                 return View(result);

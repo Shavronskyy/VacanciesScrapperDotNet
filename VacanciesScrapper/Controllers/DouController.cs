@@ -20,7 +20,7 @@ namespace VacanciesScrapper.Controllers
         }
 
         [HttpGet(Name = "GetAllDouVacanciesByCategory")]
-        public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories cat, YearsOfExperience exp)
+        public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
             return await DouVacancies.GetShortVacanciesByCategory(cat, exp);
         }

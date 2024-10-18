@@ -20,6 +20,6 @@
 
         public string Link { get; set; }
 
-        public string fitByCv { get; set; }
+        public int fitByCv { get; set; }
     }
 }
