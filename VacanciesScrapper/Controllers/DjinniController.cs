@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VacanciesScrapper_BLL.Enums;
+using VacanciesScrapper_BLL.MediatR.JobSites.Djinni;
 using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
+using VacanciesScrapper_WebApi.Controllers.Base;
 
 namespace VacanciesScrapper_WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]/[action]")]
-public class DjinniController : ControllerBase
+public class DjinniController : BaseApiController
 {
     
     private readonly ILogger<DjinniController> _logger;
@@ -20,9 +22,9 @@ public class DjinniController : ControllerBase
     }
 
     [HttpGet(Name = "GetAllDjinniVacanciesByCategory")]
-    public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
+    public async Task<IActionResult> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
     {
-        return await _djinniService.GetAllVacanciesByCategory(cat, exp);
+        return HandleResult(await Mediator.Send(new GetAllVacanciesByCategoryQuery(cat, exp)));
     }
 }
 
