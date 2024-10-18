@@ -1,7 +1,7 @@
 ﻿using System;
-using VacanciesScrapper.Enums;
+using VacanciesScrapper_BLL.Enums;
 
-namespace VacanciesScrapper.Switches
+namespace VacanciesScrapper_BLL.Switches
 {
 	public class CategoriesDou
 	{

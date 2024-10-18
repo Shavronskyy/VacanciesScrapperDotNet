@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace VacanciesScrapper.Enums
+namespace VacanciesScrapper_BLL.Enums
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Categories

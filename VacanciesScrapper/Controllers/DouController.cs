@@ -1,12 +1,9 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
-using VacanciesScrapper.Enums;
-using VacanciesScrapper.Services;
-using VacanciesScrapper.Models;
-using VacanciesScrapper.Services.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
+using VacanciesScrapper_BLL.Enums;
+using VacanciesScrapper_BLL.Models;
+using VacanciesScrapper_BLL.Services.Interfaces;
 
-namespace VacanciesScrapper.Controllers
+namespace VacanciesScrapper_WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
