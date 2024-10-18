@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VacanciesScrapper.Services;
 
-namespace VacanciesScrapper.Controllers;
+namespace VacanciesScrapper_WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]/[action]")]

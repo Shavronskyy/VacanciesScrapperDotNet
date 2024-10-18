@@ -1,7 +1,7 @@
 ﻿using HtmlAgilityPack;
-using VacanciesScrapper.Services.Interfaces;
+using VacanciesScrapper_BLL.Services.Interfaces;
 
-namespace VacanciesScrapper.Services;
+namespace VacanciesScrapper_BLL.Services.Realizations;
 
 public class ScrapperService : IScrapperService
 {

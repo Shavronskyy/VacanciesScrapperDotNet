@@ -1,9 +1,8 @@
-﻿using System;
-using VacanciesScrapper.Enums;
-using VacanciesScrapper.Models;
-using VacanciesScrapper.Services.Interfaces;
+﻿using VacanciesScrapper_BLL.Enums;
+using VacanciesScrapper_BLL.Models;
+using VacanciesScrapper_BLL.Services.Interfaces;
 
-namespace VacanciesScrapper.Services
+namespace VacanciesScrapper_BLL.Services.Realizations
 {
 	public class HomeVacanciesService : IHomeVacanciesService
 	{

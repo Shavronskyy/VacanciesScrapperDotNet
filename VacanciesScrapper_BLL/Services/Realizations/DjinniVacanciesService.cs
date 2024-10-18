@@ -1,11 +1,11 @@
 ﻿using HtmlAgilityPack;
-using VacanciesScrapper.Enums;
-using VacanciesScrapper.Models;
-using VacanciesScrapper.Services.Interfaces;
-using VacanciesScrapper.Switches;
-using VacanciesScrapper.Utils;
+using VacanciesScrapper_BLL.Enums;
+using VacanciesScrapper_BLL.Models;
+using VacanciesScrapper_BLL.Services.Interfaces;
+using VacanciesScrapper_BLL.Switches;
+using VacanciesScrapper_BLL.Utils;
 
-namespace VacanciesScrapper.Services
+namespace VacanciesScrapper_BLL.Services.Realizations
 {
 	public class DjinniVacanciesService : IDjinniVacanciesService
 	{

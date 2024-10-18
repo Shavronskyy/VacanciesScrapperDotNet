@@ -1,8 +1,7 @@
-﻿
-using VacanciesScrapper.Services;
-using VacanciesScrapper.Services.Interfaces;
+﻿using VacanciesScrapper_BLL.Services.Interfaces;
+using VacanciesScrapper_BLL.Services.Realizations;
 
-namespace VacanciesScrapper;
+namespace VacanciesScrapper_WebApi;
 
 public class Program
 {

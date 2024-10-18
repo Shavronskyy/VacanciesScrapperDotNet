@@ -2,9 +2,9 @@
 using GroqSharp.Models;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
-using VacanciesScrapper.Services.Interfaces;
+using VacanciesScrapper_BLL.Services.Interfaces;
 
-namespace VacanciesScrapper.Services;
+namespace VacanciesScrapper_BLL.Services.Realizations;
 
 public class AIAnalyzerService : IAIAnalyzerService
 {

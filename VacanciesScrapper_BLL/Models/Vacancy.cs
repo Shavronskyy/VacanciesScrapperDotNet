@@ -1,4 +1,4 @@
-﻿namespace VacanciesScrapper.Models;
+﻿namespace VacanciesScrapper_BLL.Models;
 
 public class Vacancy
 {

@@ -1,4 +1,4 @@
-﻿namespace VacanciesScrapper.Services.Interfaces;
+﻿namespace VacanciesScrapper_BLL.Services.Interfaces;
 
 public interface IAIAnalyzerService
 {
