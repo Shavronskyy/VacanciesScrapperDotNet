@@ -1,90 +1,5 @@
 ﻿@model List<VacanciesScrapper_Web.Models.VacancyViewModel>
 
-<style>
-    .vacancy-block {
-        border: 1px solid #ddd;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        max-width: 1200px;
-        font-family: Arial, sans-serif;
-    }
-
-    .vacancy-header {
-        display: flex;
-        align-items: center;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 10px;
-        margin-bottom: 15px;
-    }
-
-        .vacancy-header img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-right: 15px;
-        }
-
-        .vacancy-header div {
-            font-size: 14px;
-        }
-
-            .vacancy-header div strong {
-                display: block;
-                font-size: 16px;
-                color: #333;
-            }
-
-    .vacancy-title-salary {
-        font-size: 16px;
-        margin-bottom: 15px;
-    }
-
-        .vacancy-title-salary strong {
-            color: #007BFF;
-            font-size: 18px;
-        }
-
-    .vacancy-description {
-        font-size: 14px;
-        color: #666;
-    }
-
-    .chooser {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        background-color: #f7f7f7;
-        border-bottom: 1px solid #ddd;
-        margin-bottom: 20px;
-        font-family: Arial, sans-serif;
-    }
-
-        .chooser select {
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            width: 200px;
-        }
-
-        .chooser button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-            .chooser button:hover {
-                background-color: #0056b3;
-            }
-</style>
 <div class="row">
     <div class="mx-auto">
         <h1 class="text-center">Junior's tears</h1>
@@ -101,6 +16,7 @@
                 <option value="React">React</option>
                 <option value="Js">Java Script</option>
                 <option value="C++">C++</option>
+                <option value="Node.JS">Node.js</option>
             </select>
             <label for="category-select"><strong>Experience:</strong></label>
             <select id="category-select">
@@ -119,23 +35,35 @@
                 <!-- Company Name and Image -->
                 <div class="vacancy-header">
                     <img src="@vacancy.CompanyImg" alt="Company Logo" style="width: 50px; height: 50px; margin-right: 10px;">
-                    <div>
-                        <strong>Company:</strong> @vacancy.Company
-                        <strong>Location:</strong> @vacancy.Location<br>
+                    <div style="display: flex; gap: 10px;">
+                        <strong>Company: @vacancy.Company</strong>
+                        <strong>Location: @vacancy.Location</strong><br>
                         <!--<strong>Posted:</strong> October 10, 2024-->
                     </div>
                 </div>
 
                 <!-- Title and Salary -->
                 <div class="vacancy-title-salary">
-                    <strong>Title:</strong> @vacancy.Title<br>
-                    <strong>Salary:</strong> @vacancy.Salary
+                    <strong>@vacancy.Title</strong><br>
+                    @if (!string.IsNullOrEmpty(vacancy.Salary))
+                    {
+                        <strong class="text-success">Salary: @vacancy.Salary</strong>
+                    }
                 </div>
 
                 <!-- Short Description -->
                 <div class="vacancy-description">
-                    <strong>Description:</strong> @vacancy.shortDescription<br />
-                    <strong>AI: fit for you by CV on @vacancy.fitByCv</strong>
+                    <strong>@vacancy.shortDescription</strong><br />
+                    <strong>AI: Fit for you by CV on
+                        <span class = @(vacancy.fitByCv >= 70 ? "text-success" : 
+                                        vacancy.fitByCv >= 30 ? "text-warning" : "text-danger")
+                        >
+                        @vacancy.fitByCv%</span></strong>
+                </div>
+                <div class="mt-2">
+                    <a class="btn btn-primary seefullbutton" href="@vacancy.Link" target="_blank">
+                        See full vacancy
+                    </a>
                 </div>
             </div>
         }

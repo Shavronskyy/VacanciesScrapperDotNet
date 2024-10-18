@@ -7,7 +7,7 @@ namespace VacanciesScrapper.Services;
 
 public class AIAnalyzerService
 {
-    public static async Task<string> AnalyzeVacancyAnswerInPrecents(string description)
+    public static async Task<int> AnalyzeVacancyAnswerInPrecents(string description)
     {
         var apiKey = Environment.GetEnvironmentVariable("GROQ_APIKEY");
         var apiModel = Environment.GetEnvironmentVariable("GROQ_MODEL");
@@ -28,9 +28,9 @@ public class AIAnalyzerService
                                                                       "you must to count by experience, technologies, programming languages, skills." +
                                                                       "main critearia for you is a main programming language from CV and from vacancy descriptino" +
                                                                       "for example: if CV have main tech stack '.NET' and vacancy is SWIFT, than this will be 0 precents" +
-                                                                      "always at the end put '%'" },
+                                                                      "you dont need to put '%' at the end" },
             new Message { Role = MessageRoleType.User, Content = "CV:" + result + " " + "Vacancy description" + description });
-        return (response);
+        return (Convert.ToInt32(response));
     }
 
     static string ExtractTextFromPdf(string pdfPath)

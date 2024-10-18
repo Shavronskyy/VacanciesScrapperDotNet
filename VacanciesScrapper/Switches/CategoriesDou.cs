@@ -9,8 +9,6 @@ namespace VacanciesScrapper.Switches
         {
             switch (cat)
             {
-                case Categories.None:
-                    return "";
                 case Categories.DOTNET:
                     return "vacancies/?category=.NET";
                 case Categories.Angular:

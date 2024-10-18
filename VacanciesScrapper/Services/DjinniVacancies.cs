@@ -74,7 +74,7 @@ namespace VacanciesScrapper.Services
             return result;
         }
 
-		private static async Task<string> AnalyzingVacancyByAI(string fullDescription)
+		private static async Task<int> AnalyzingVacancyByAI(string fullDescription)
 		{
 			return await AIAnalyzerService.AnalyzeVacancyAnswerInPrecents(fullDescription);
 		}
