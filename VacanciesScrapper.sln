@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VacanciesScrapper_WebApi", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacanciesScrapper_Web", "VacanciesScrapper_Web\VacanciesScrapper_Web.csproj", "{6E7BCAB0-22FE-49E3-AE3C-1A52ED7CFE76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacanciesScrapper_BLL", "VacanciesScrapper_BLL\VacanciesScrapper_BLL.csproj", "{56810450-1EB6-44B5-9802-63F1BDF5F481}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacanciesScrapper_Tests", "VacanciesScrapper_Tests\VacanciesScrapper_Tests.csproj", "{947AB237-47FB-4618-8DE7-E8EE58A3A666}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{6E7BCAB0-22FE-49E3-AE3C-1A52ED7CFE76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E7BCAB0-22FE-49E3-AE3C-1A52ED7CFE76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E7BCAB0-22FE-49E3-AE3C-1A52ED7CFE76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56810450-1EB6-44B5-9802-63F1BDF5F481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56810450-1EB6-44B5-9802-63F1BDF5F481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56810450-1EB6-44B5-9802-63F1BDF5F481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56810450-1EB6-44B5-9802-63F1BDF5F481}.Release|Any CPU.Build.0 = Release|Any CPU
+		{947AB237-47FB-4618-8DE7-E8EE58A3A666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{947AB237-47FB-4618-8DE7-E8EE58A3A666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{947AB237-47FB-4618-8DE7-E8EE58A3A666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{947AB237-47FB-4618-8DE7-E8EE58A3A666}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
