@@ -23,6 +23,7 @@ public class Program
         builder.Services.AddTransient<IHomeVacanciesService, HomeVacanciesService>();
         builder.Services.AddTransient<IDjinniVacanciesService, DjinniVacanciesService>();
         builder.Services.AddTransient<IDouVacanciesService, DouVacanciesService>();
+        builder.Services.AddTransient<IAIAnalyzerService, AIAnalyzerService>();
         builder.Services.AddTransient<IScrapperService, ScrapperService>();
 
         var app = builder.Build();

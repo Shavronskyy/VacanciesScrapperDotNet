@@ -10,10 +10,12 @@ namespace VacanciesScrapper.Services
 	public class DjinniVacanciesService : IDjinniVacanciesService
 	{
 		private IScrapperService _scrapperService;
+		private IAIAnalyzerService _aiService;
 		
-		public DjinniVacanciesService(IScrapperService scrapperService)
+		public DjinniVacanciesService(IScrapperService scrapperService, IAIAnalyzerService aiService)
 		{
 			_scrapperService = scrapperService;
+			_aiService = aiService;
 		}
 
 		public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
@@ -64,12 +66,12 @@ namespace VacanciesScrapper.Services
             return result;
         }
 
-		private static async Task<int> AnalyzingVacancyByAI(string fullDescription)
+		private async Task<int> AnalyzingVacancyByAI(string fullDescription)
 		{
-			return await AIAnalyzerService.AnalyzeVacancyAnswerInPrecents(fullDescription);
+			return await _aiService.AnalyzeVacancyAnswerInPrecents(fullDescription);
 		}
 
-		public async Task<string> GetFullDescription(string url)
+		private async Task<string> GetFullDescription(string url)
 		{
 			var document = await _scrapperService.GetHtml(url);
 			

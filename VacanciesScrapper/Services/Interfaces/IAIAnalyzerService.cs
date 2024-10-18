@@ -2,5 +2,5 @@
 
 public interface IAIAnalyzerService
 {
-    
+    Task<int> AnalyzeVacancyAnswerInPrecents(string description);
 }
