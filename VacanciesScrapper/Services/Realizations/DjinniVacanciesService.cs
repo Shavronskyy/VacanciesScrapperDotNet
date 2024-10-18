@@ -1,22 +1,23 @@
 ﻿using HtmlAgilityPack;
 using VacanciesScrapper.Enums;
 using VacanciesScrapper.Models;
+using VacanciesScrapper.Services.Interfaces;
 using VacanciesScrapper.Switches;
 using VacanciesScrapper.Utils;
 
 namespace VacanciesScrapper.Services
 {
-	public class DjinniVacancies
+	public class DjinniVacanciesService : IDjinniVacanciesService
 	{
 		private static HttpClient _client;
 		
-		static DjinniVacancies()
+		static DjinniVacanciesService()
 		{
 			_client = new();
 			_client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
 		}
 
-		public async static Task<IEnumerable<Vacancy>> GetAllVacancies(Categories? cat, YearsOfExperience? exp)
+		public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
 		{
 			var url = "https://djinni.co/jobs/" + CategoriesDjinni.GetCategory(cat) + CategoriesDjinni.GetExperience(exp);
 

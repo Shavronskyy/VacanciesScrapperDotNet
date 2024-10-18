@@ -1,4 +1,7 @@
 ﻿
+using VacanciesScrapper.Services;
+using VacanciesScrapper.Services.Interfaces;
+
 namespace VacanciesScrapper;
 
 public class Program
@@ -17,6 +20,10 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         
+        builder.Services.AddTransient<IHomeVacanciesService, HomeVacanciesService>();
+        builder.Services.AddTransient<IDjinniVacanciesService, DjinniVacanciesService>();
+        builder.Services.AddTransient<IDouVacanciesService, DouVacanciesService>();
+        builder.Services.AddTransient<IScrapperService, ScrapperService>();
 
         var app = builder.Build();
 
