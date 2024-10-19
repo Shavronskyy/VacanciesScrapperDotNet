@@ -10,7 +10,7 @@ namespace VacanciesScrapper_Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly HttpClient _client;
-        Uri baseUri = new Uri("https://localhost:44382/");
+        Uri baseUri = new Uri("https://localhost:7032/");
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -22,7 +22,7 @@ namespace VacanciesScrapper_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            HttpResponseMessage response = _client.GetAsync("api/Djinni/GetAllVacanciesByCategory?cat=Node&exp=LessThanOne").Result;
+            HttpResponseMessage response = _client.GetAsync("api/AllVacancies/GetAllVacanciesByCategory").Result;
 
             if (response.IsSuccessStatusCode)
             {

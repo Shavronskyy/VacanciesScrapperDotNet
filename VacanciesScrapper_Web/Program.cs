@@ -7,8 +7,18 @@ namespace VacanciesScrapper_Web
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            
+            Environment.SetEnvironmentVariable("BaseUrl", builder.Configuration.GetSection("URLs").GetSection("BaseApiUrl").Value);
+            
+            builder.Services.AddHttpClient("defaultClient", client =>
+            {
+                client.BaseAddress = new Uri(Environment.GetEnvironmentVariable("BaseUrl"));
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
+            
             builder.Services.AddControllersWithViews();
 
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

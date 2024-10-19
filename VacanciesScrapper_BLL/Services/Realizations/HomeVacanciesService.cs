@@ -17,8 +17,8 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 
 		public async Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
 		{
-			var douVacancies = await _douService.GetAllVacanciesByCategory(cat, exp);
-			var djinniVacancies = await _djinniService.GetAllVacanciesByCategory(cat, exp);
+			var douVacancies = await _douService.GetAllDouVacanciesByCategory(cat, exp);
+			var djinniVacancies = await _djinniService.GetAllDjinniVacanciesByCategory(cat, exp);
 			
 			return douVacancies.Concat(djinniVacancies);
 		}

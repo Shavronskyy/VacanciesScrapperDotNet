@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
 using MediatR;
+using Serilog;
 using VacanciesScrapper_BLL.MediatR.JobSites.Djinni;
 using VacanciesScrapper_BLL.Services.Interfaces;
+using VacanciesScrapper_BLL.Services.Logging;
 using VacanciesScrapper_BLL.Services.Realizations;
 
 namespace VacanciesScrapper_WebApi;
@@ -14,29 +16,29 @@ public class Program
 
         Environment.SetEnvironmentVariable("GROQ_APIKEY", builder.Configuration.GetSection("Groq").GetSection("APIKEY").Value);
         Environment.SetEnvironmentVariable("GROQ_MODEL", builder.Configuration.GetSection("Groq").GetSection("Model").Value);
-        
+
         // Add services to the container.
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddLogging();
 
         var currentAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-        // TODO: refactor that to one command
-
-        builder.Services.AddMediatR(conf =>
-        {
-            conf.RegisterServicesFromAssembly(typeof(GetAllVacanciesByCategoryQuery).Assembly);
-            conf.RegisterServicesFromAssembly(typeof(GetAllVacanciesByCategoryQuery).Assembly);
-        }); 
-
+        builder.Services.AddSingleton(Log.Logger);
         builder.Services.AddTransient<IHomeVacanciesService, HomeVacanciesService>();
         builder.Services.AddTransient<IDjinniVacanciesService, DjinniVacanciesService>();
         builder.Services.AddTransient<IDouVacanciesService, DouVacanciesService>();
         builder.Services.AddTransient<IAIAnalyzerService, AIAnalyzerService>();
         builder.Services.AddTransient<IScrapperService, ScrapperService>();
+        builder.Services.AddTransient<ILoggerService, LoggerService>();
+
+        builder.Services.AddMediatR(conf =>
+        {
+            conf.RegisterServicesFromAssemblies(currentAssemblies);
+        });
 
         var app = builder.Build();
 
