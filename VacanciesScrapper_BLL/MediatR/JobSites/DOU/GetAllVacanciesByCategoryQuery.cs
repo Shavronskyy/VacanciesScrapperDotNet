@@ -8,4 +8,3 @@ namespace VacanciesScrapper_BLL.MediatR.JobSites.DOU
 {
     public record GetAllDouVacanciesByCategoryQuery(Categories? cat, YearsOfExperience? exp) : IRequest<Result<IEnumerable<Vacancy>>>;
 }
-

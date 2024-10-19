@@ -2,6 +2,7 @@
 using VacanciesScrapper_BLL.Enums;
 using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
+using VacanciesScrapper_BLL.Services.Logging;
 using VacanciesScrapper_BLL.Switches;
 using VacanciesScrapper_BLL.Utils;
 
@@ -11,11 +12,13 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 	{
 		private IScrapperService _scrapperService;
 		private IAIAnalyzerService _aiService;
+		private ILoggerService _logger;
 		
-		public DjinniVacanciesService(IScrapperService scrapperService, IAIAnalyzerService aiService)
+		public DjinniVacanciesService(IScrapperService scrapperService, IAIAnalyzerService aiService, ILoggerService logger)
 		{
 			_scrapperService = scrapperService;
 			_aiService = aiService;
+			_logger = logger;
 		}
 
 		public async Task<IEnumerable<Vacancy>> GetAllDjinniVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
@@ -27,6 +30,12 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 			var nodes = document.DocumentNode.SelectNodes("//ul[@class='list-unstyled list-jobs mb-4']/li[@class='mb-4']");
 
             var result = new List<Vacancy>();
+
+            if (nodes is null)
+			{
+				return result;
+			}
+
             foreach (var node in nodes)
             {
 	            var salaryNode = node.SelectSingleNode(".//h3[@class='mb-2']/strong[@class='text-success']/span[@class='public-salary-item']");
