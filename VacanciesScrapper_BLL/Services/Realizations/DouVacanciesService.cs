@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using FluentResults;
+using HtmlAgilityPack;
 using VacanciesScrapper_BLL.Enums;
 using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
@@ -24,7 +25,13 @@ namespace VacanciesScrapper_BLL.Services.Realizations
             
             var nodes = document.DocumentNode.SelectNodes("//li[@class='l-vacancy']");
 
-            var shortVacancy = new List<Vacancy>();
+            var vacancy = new List<Vacancy>();
+
+            if (nodes is null)
+            {
+                return vacancy;
+            }
+
             foreach (var node in nodes)
             {
                 var salaryNode = node.SelectSingleNode(".//div[@class='title']/span[@class='salary']");
@@ -44,7 +51,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
                 CodeCleaner.ScrubHtml(ref company);
                 CodeCleaner.ScrubHtml(ref salary);
 
-                shortVacancy.Add(new Vacancy
+                vacancy.Add(new Vacancy
                 {
                     CreationDate = date,
                     Title = title,
@@ -58,7 +65,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
                 });
             }
 
-            return shortVacancy;
+            return vacancy;
         }
 
         private async Task<string> GetFullDescription(string url)
