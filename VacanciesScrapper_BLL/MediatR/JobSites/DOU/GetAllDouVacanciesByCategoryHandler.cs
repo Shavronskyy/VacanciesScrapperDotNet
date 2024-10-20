@@ -5,7 +5,7 @@ using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
 using VacanciesScrapper_BLL.Services.Logging;
 
-namespace VacanciesScrapper_BLL.MediatR.JobSites.Dou;
+namespace VacanciesScrapper_BLL.MediatR.JobSites.DOU;
 
 public class GetAllDouVacanciesByCategoryHandler : IRequestHandler<GetAllDouVacanciesByCategoryQuery, Result<IEnumerable<Vacancy>>>
 {
