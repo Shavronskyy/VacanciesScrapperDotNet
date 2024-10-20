@@ -38,8 +38,6 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-      - name: Test and Code Coverage
-        run: dotnet-coverage collect "dotnet test ./VacanciesScrapper/VacanciesScrapper_Tests/VacanciesScrapper_Tests.csproj --configuration Release --results-directory ./coverage --logger trx" -f xml -o coverage.xml
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
