@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Diagnostics;
-using System.Text.Json.Serialization;
+using VacanciesScrapper_BLL.Enums;
 using VacanciesScrapper_Web.Models;
 
 namespace VacanciesScrapper_Web.Controllers
@@ -10,19 +8,19 @@ namespace VacanciesScrapper_Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly HttpClient _client;
-        Uri baseUri = new Uri("https://localhost:7032/");
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
             _client = new HttpClient();
-            _client.BaseAddress = baseUri;
+            _client.BaseAddress = new Uri(Environment.GetEnvironmentVariable("BaseUrl"));
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] Categories cat, YearsOfExperience exp )
         {
-            HttpResponseMessage response = _client.GetAsync("api/AllVacancies/GetAllVacanciesByCategory").Result;
+            var requestUri = Environment.GetEnvironmentVariable("GetAllVacancies");
+            HttpResponseMessage response = _client.GetAsync(requestUri).Result;
 
             if (response.IsSuccessStatusCode)
             {

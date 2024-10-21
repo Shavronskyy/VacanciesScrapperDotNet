@@ -1,32 +1,29 @@
-﻿@model List<VacanciesScrapper_Web.Models.VacancyViewModel>
+﻿@using VacanciesScrapper_BLL.Enums
+@model List<VacanciesScrapper_Web.Models.VacancyViewModel>
 
 <div class="row">
     <div class="mx-auto">
         <h1 class="text-center">Junior's tears</h1>
         <h3 class="text-center">Vacancies for junior software developers. With love</h3>
     </div>
-    <div class="chooser mx-auto">
-        <!-- Category Selector -->
-        <div class="mx-auto">
-            <label for="category-select"><strong>Category:</strong></label>
-            <select id="category-select">
-                <option value="None">------</option>
-                <option value=".NET">.NET</option>
-                <option value="JAVA">Java</option>
-                <option value="React">React</option>
-                <option value="Js">Java Script</option>
-                <option value="C++">C++</option>
-                <option value="Node.JS">Node.js</option>
-            </select>
-            <label for="category-select"><strong>Experience:</strong></label>
-            <select id="category-select">
-                <option value="None">------</option>
-                <option value="LessThanOne">LessThanOne</option>
-                <option value="FromOneToThree">FromOneToThree</option>
-                <option value="FromThreeToFive">FromThreeToFive</option>
-                <option value="FivePlus">FivePlus</option>
-            </select>
-        </div>
+    <div>
+        <h4>Select Category:</h4>
+        <form asp-controller="Home" asp-action="Index" method="get" style="display: inline;">
+            <input type="hidden" name="cat" value="@Categories.DOTNET" />
+            <button type="submit">.NET</button>
+        </form>
+
+        <form asp-controller="Home" asp-action="Index" method="get" style="display: inline;">
+            <input type="hidden" name="cat" value="@Categories.Java" />
+            <button type="submit">Java</button>
+        </form>
+
+        <form asp-controller="Home" asp-action="Index" method="get" style="display: inline;">
+            <input type="hidden" name="cat" value="@Categories.Python" />
+            <button type="submit">Python</button>
+        </form>
+
+        <!-- Add more category buttons as needed -->
     </div>
     <div>
         @foreach (var vacancy in Model)

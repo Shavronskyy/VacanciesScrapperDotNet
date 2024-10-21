@@ -9,6 +9,7 @@ namespace VacanciesScrapper_Web
             // Add services to the container.
             
             Environment.SetEnvironmentVariable("BaseUrl", builder.Configuration.GetSection("URLs").GetSection("BaseApiUrl").Value);
+            Environment.SetEnvironmentVariable("GetAllVacancies", builder.Configuration.GetSection("URLs").GetSection("GetAllVacancies").Value);
             
             builder.Services.AddHttpClient("defaultClient", client =>
             {

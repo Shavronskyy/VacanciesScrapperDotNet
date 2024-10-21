@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using VacanciesScrapper_BLL.Enums;
 using VacanciesScrapper_BLL.Services.Interfaces;
 
 namespace VacanciesScrapper_BLL.Services.Realizations;
