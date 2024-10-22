@@ -1,6 +1,7 @@
-﻿namespace VacanciesScrapper_BLL.Services.Interfaces;
-
-public interface IAIAnalyzerService
+﻿namespace VacanciesScrapper_BLL.Services.Interfaces
 {
-    Task<int> AnalyzeVacancyAnswerInPrecents(string description);
+    public interface IAIAnalyzerService
+    {
+        Task<int> AnalyzeVacancyAnswerInPrecents(string description);
+    }
 }

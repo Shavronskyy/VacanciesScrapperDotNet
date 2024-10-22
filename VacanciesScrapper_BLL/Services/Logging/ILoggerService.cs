@@ -1,6 +1,7 @@
-namespace VacanciesScrapper_BLL.Services.Logging;
-
-public interface ILoggerService
+namespace VacanciesScrapper_BLL.Services.Logging
 {
-    void LogError(object request, string errorMsg);
+    public interface ILoggerService
+    {
+        void LogError(object request, string errorMsg);
+    }
 }

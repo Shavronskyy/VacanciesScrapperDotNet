@@ -6,18 +6,18 @@ using Microsoft.Extensions.Options;
 using VacanciesScrapper_BLL.Options;
 using VacanciesScrapper_BLL.Services.Interfaces;
 
-namespace VacanciesScrapper_BLL.Services.Realizations;
-
-public class AIAnalyzerService : IAIAnalyzerService
+namespace VacanciesScrapper_BLL.Services.Realizations
 {
-    private readonly AIOptions _options;
+    public class AIAnalyzerService : IAIAnalyzerService
+    {
+        private readonly AIOptions _options;
 
-    public AIAnalyzerService(IOptions<AIOptions> options)
+        public AIAnalyzerService(IOptions<AIOptions> options)
     {
         _options = options.Value;
     }
     
-    public async Task<int> AnalyzeVacancyAnswerInPrecents(string description)
+        public async Task<int> AnalyzeVacancyAnswerInPrecents(string description)
     {
         
         var pdf = "file:///Users/shavronskyy/Downloads/Shavronskyy_SalesManager.pdf";
@@ -40,7 +40,7 @@ public class AIAnalyzerService : IAIAnalyzerService
         return Convert.ToInt32(response);
     }
 
-    static string ExtractTextFromPdf(string pdfPath)
+        static string ExtractTextFromPdf(string pdfPath)
     {
         using (var pdfReader = new PdfReader(pdfPath))
         using (var pdfDocument = new PdfDocument(pdfReader))
@@ -53,5 +53,6 @@ public class AIAnalyzerService : IAIAnalyzerService
             }
             return writer.ToString();
         }
+    }
     }
 }

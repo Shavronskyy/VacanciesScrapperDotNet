@@ -3,11 +3,11 @@ using VacanciesScrapper_BLL.Services.Logging;
 using VacanciesScrapper_BLL.Services.Realizations;
 using VacanciesScrapper_BLL.Options;
 
-namespace VacanciesScrapper_WebApi;
-
-public class Program
+namespace VacanciesScrapper_WebApi
 {
-    public static void Main(string[] args)
+    public class Program
+    {
+        public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +53,7 @@ public class Program
         app.MapControllers();
 
         app.Run();
+    }
     }
 }
 
