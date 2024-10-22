@@ -21,7 +21,7 @@ public class GetAllDjinniVacanciesByCategoryHandler : IRequestHandler<GetAllDjin
     {
         var vacancies = await _djinniService.GetAllDjinniVacanciesByCategory(request.cat, request.exp);
 
-        if (vacancies is null || vacancies.Count() == 0)
+        if (vacancies.Any())
         {
             const string errorMsg = $"Cannot find any vacancies";
             _logger.LogError(request, errorMsg);

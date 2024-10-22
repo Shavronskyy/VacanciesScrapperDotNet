@@ -22,7 +22,7 @@ public class GetAllVacanciesByCategoryHandler : IRequestHandler<GetAllVacanciesB
     {
         var vacancies = await _homeService.GetAllVacanciesByCategory(request.cat, request.exp);
 
-        if (vacancies is null || vacancies.Count() == 0)
+        if (vacancies.Any())
         {
             const string errorMsg = $"Cannot find any vacancies";
             _logger.LogError(request, errorMsg);
