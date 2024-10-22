@@ -26,7 +26,7 @@ public class GetAllDouVacanciesByCategoryHandler : IRequestHandler<GetAllDouVaca
         {
             const string errorMsg = $"Cannot find any vacancies";
             _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
+            return Result.Ok(Enumerable.Empty<Vacancy>());
         }
 
         return Result.Ok(vacancies);

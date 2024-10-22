@@ -1,6 +1,5 @@
 using FluentResults;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
 using VacanciesScrapper_BLL.Services.Logging;
@@ -26,7 +25,7 @@ public class GetAllVacanciesByCategoryHandler : IRequestHandler<GetAllVacanciesB
         {
             const string errorMsg = $"Cannot find any vacancies";
             _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
+            return Result.Ok(Enumerable.Empty<Vacancy>());
         }
 
         return Result.Ok(vacancies);
