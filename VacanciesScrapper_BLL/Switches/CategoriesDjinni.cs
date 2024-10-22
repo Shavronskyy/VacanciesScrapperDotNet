@@ -16,7 +16,7 @@ namespace VacanciesScrapper_BLL.Switches
 			{
 				case Categories.None:
 					return "";
-				case Categories.DOTNET:
+				case Categories.Dotnet:
 					return "?primary_keyword=.NET";
 				case Categories.Angular:
 					return "?primary_keyword=Angular";
@@ -32,11 +32,11 @@ namespace VacanciesScrapper_BLL.Switches
 					return "?primary_keyword=Java";
 				case Categories.Python:
 					return "?primary_keyword=Python";
-				case Categories.PHP:
+				case Categories.Php:
 					return "?primary_keyword=PHP";
 				case Categories.Node:
 					return "?primary_keyword=Node.js";
-				case Categories.IOS:
+				case Categories.Ios:
 					return "?primary_keyword=iOS";
 				case Categories.Android:
 					return "?primary_keyword=Android";
@@ -44,7 +44,7 @@ namespace VacanciesScrapper_BLL.Switches
 					return "?primary_keyword=React+Native";
 				case Categories.C:
 					return "/?primary_keyword=C+Lang";
-				case Categories.CPP:
+				case Categories.Cpp:
 					return "?primary_keyword=CPP";
 				case Categories.Flutter:
 					return "?primary_keyword=Flutter";

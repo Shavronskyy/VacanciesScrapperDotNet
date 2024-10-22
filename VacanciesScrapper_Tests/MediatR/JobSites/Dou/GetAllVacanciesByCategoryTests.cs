@@ -23,7 +23,7 @@ public class GetAllVacanciesByCategoryTests
     public async Task Handler_ShouldReturnErrorMsg_WhenVacanciesIsNull()
     {
         // Arrange
-        var query = new GetAllDouVacanciesByCategoryQuery(Categories.DOTNET, YearsOfExperience.LessThanOne);
+        var query = new GetAllDouVacanciesByCategoryQuery(Categories.Dotnet, YearsOfExperience.LessThanOne);
         var handler = new GetAllDouVacanciesByCategoryHandler(_serviceMock.Object, _logger.Object);
         var expectedErrorMessage = $"Cannot find any vacancies";
 

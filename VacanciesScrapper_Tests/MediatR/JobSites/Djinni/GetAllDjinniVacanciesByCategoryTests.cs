@@ -22,7 +22,7 @@ namespace VacanciesScrapper_Tests.MediatR.JobSites.Djinni
         public async Task Handler_ShouldReturnErrorMsg_WhenVacanciesIsNull()
         {
             // Arrange
-            var query = new GetAllDjinniVacanciesByCategoryQuery(Categories.DOTNET, YearsOfExperience.LessThanOne);
+            var query = new GetAllDjinniVacanciesByCategoryQuery(Categories.Dotnet, YearsOfExperience.LessThanOne);
             var handler = new GetAllDjinniVacanciesByCategoryHandler(_serviceMock.Object, _logger.Object);
             var expectedErrorMessage = $"Cannot find any vacancies";
 

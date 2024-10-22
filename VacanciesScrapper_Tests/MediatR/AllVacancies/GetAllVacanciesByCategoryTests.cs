@@ -23,7 +23,7 @@ namespace VacanciesScrapper_Tests.MediatR.AllVacancies
         public async Task Handler_ShouldReturnErrorMsg_WhenVacanciesIsNull()
         {
             // Arrange
-            var query = new GetAllVacanciesByCategoryQuery(Categories.DOTNET, YearsOfExperience.LessThanOne);
+            var query = new GetAllVacanciesByCategoryQuery(Categories.Dotnet, YearsOfExperience.LessThanOne);
             var handler = new GetAllVacanciesByCategoryHandler(_serviceMock.Object, _loggerMock.Object);
             var expectedErrorMessage = $"Cannot find any vacancies";
 
