@@ -22,7 +22,7 @@ public class GetAllDouVacanciesByCategoryHandler : IRequestHandler<GetAllDouVaca
     {
         var vacancies = await _douService.GetAllDouVacanciesByCategory(request.cat, request.exp);
 
-        if (vacancies.Any())
+        if (!vacancies.Any())
         {
             const string errorMsg = $"Cannot find any vacancies";
             _logger.LogError(request, errorMsg);
