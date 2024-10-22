@@ -5,6 +5,7 @@ using VacanciesScrapper_BLL.MediatR.JobSites.Djinni;
 using VacanciesScrapper_BLL.Services.Interfaces;
 using VacanciesScrapper_BLL.Services.Logging;
 using VacanciesScrapper_BLL.Services.Realizations;
+using VacanciesScrapper_BLL.Options;
 
 namespace VacanciesScrapper_WebApi;
 
@@ -14,11 +15,11 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        Environment.SetEnvironmentVariable("GROQ_APIKEY", builder.Configuration.GetSection("Groq").GetSection("APIKEY").Value);
-        Environment.SetEnvironmentVariable("GROQ_MODEL", builder.Configuration.GetSection("Groq").GetSection("Model").Value);
-
         // Add services to the container.
         builder.Services.AddHttpClient();
+
+        builder.Configuration.AddUserSecrets<Program>();
+        builder.Services.Configure<AIOptions>(builder.Configuration.GetSection(AIOptions.Key));
         
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -35,7 +36,7 @@ public class Program
         builder.Services.AddTransient<IAIAnalyzerService, AIAnalyzerService>();
         builder.Services.AddTransient<IScrapperService, ScrapperService>();
         builder.Services.AddTransient<ILoggerService, LoggerService>();
-
+        
         builder.Services.AddMediatR(conf =>
         {
             conf.RegisterServicesFromAssemblies(currentAssemblies);

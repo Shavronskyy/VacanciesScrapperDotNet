@@ -2,23 +2,29 @@
 using GroqSharp.Models;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
+using Microsoft.Extensions.Options;
+using VacanciesScrapper_BLL.Options;
 using VacanciesScrapper_BLL.Services.Interfaces;
 
 namespace VacanciesScrapper_BLL.Services.Realizations;
 
 public class AIAnalyzerService : IAIAnalyzerService
 {
+    private readonly AIOptions _options;
+
+    public AIAnalyzerService(IOptions<AIOptions> options)
+    {
+        _options = options.Value;
+    }
+    
     public async Task<int> AnalyzeVacancyAnswerInPrecents(string description)
     {
-        var apiKey = Environment.GetEnvironmentVariable("GROQ_APIKEY");
-        var apiModel = Environment.GetEnvironmentVariable("GROQ_MODEL");
-
-
-        var pdf = "C:\\Users\\User\\Desktop\\cv\\new cv\\Ukraine\\typescript\\Shavronskyy_Junior_.Net.pdf";
+        
+        var pdf = "file:///Users/shavronskyy/Downloads/Shavronskyy_SalesManager.pdf";
 
         var result = ExtractTextFromPdf(pdf);
 
-        IGroqClient groqClient = new GroqClient(apiKey, apiModel);
+        var groqClient = new GroqClient(_options.APIKEY, _options.Model);
 
         var response = await groqClient.CreateChatCompletionAsync(
             new Message { Role = MessageRoleType.System, Content = "You are job-search assistant, you help people how search job to find perfect job for them" },
@@ -31,18 +37,18 @@ public class AIAnalyzerService : IAIAnalyzerService
                                                                       "for example: if CV have main tech stack '.NET' and vacancy is SWIFT, than this will be 0 precents" +
                                                                       "you dont need to put '%' at the end" },
             new Message { Role = MessageRoleType.User, Content = "CV:" + result + " " + "Vacancy description" + description });
-        return (Convert.ToInt32(response));
+        return Convert.ToInt32(response);
     }
 
     static string ExtractTextFromPdf(string pdfPath)
     {
-        using (PdfReader pdfReader = new PdfReader(pdfPath))
-        using (PdfDocument pdfDocument = new PdfDocument(pdfReader))
+        using (var pdfReader = new PdfReader(pdfPath))
+        using (var pdfDocument = new PdfDocument(pdfReader))
         {
             StringWriter writer = new StringWriter();
             for (int i = 1; i <= pdfDocument.GetNumberOfPages(); i++)
             {
-                string pageText = PdfTextExtractor.GetTextFromPage(pdfDocument.GetPage(i));
+                var pageText = PdfTextExtractor.GetTextFromPage(pdfDocument.GetPage(i));
                 writer.Write(pageText);
             }
             return writer.ToString();

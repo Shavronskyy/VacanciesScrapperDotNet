@@ -16,14 +16,14 @@ public class ScrapperService : IScrapperService
     
     public async Task<HtmlDocument> GetHtml(string url)
     {
-        HttpResponseMessage response = await _client.GetAsync(url);
+        var response = await _client.GetAsync(url);
         response.EnsureSuccessStatusCode(); // Throw if not a success code
 
         // Get the response content as a string
-        string pageContent = await response.Content.ReadAsStringAsync();
+        var pageContent = await response.Content.ReadAsStringAsync();
                 
         // Load the page content into an HtmlDocument
-        HtmlDocument document = new HtmlDocument();
+        var document = new HtmlDocument();
         document.LoadHtml(pageContent);
 
         return document;

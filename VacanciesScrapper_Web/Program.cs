@@ -1,3 +1,7 @@
+using System.Reflection;
+using VacanciesScrapper_BLL.Options;
+using VacanciesScrapper_Web.Config;
+
 namespace VacanciesScrapper_Web
 {
     public class Program
@@ -7,18 +11,12 @@ namespace VacanciesScrapper_Web
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            
-            Environment.SetEnvironmentVariable("BaseUrl", builder.Configuration.GetSection("URLs").GetSection("BaseApiUrl").Value);
-            Environment.SetEnvironmentVariable("GetAllVacancies", builder.Configuration.GetSection("URLs").GetSection("GetAllVacancies").Value);
-            
-            builder.Services.AddHttpClient("defaultClient", client =>
-            {
-                client.BaseAddress = new Uri(Environment.GetEnvironmentVariable("BaseUrl"));
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
-            });
+            builder.Services.AddHttpClient();
+            builder.Configuration.AddUserSecrets<Program>();
+            builder.Services.AddOptions<UrlsOptions>()
+                .Bind(builder.Configuration.GetSection(UrlsOptions.Key));
             
             builder.Services.AddControllersWithViews();
-
             
             var app = builder.Build();
 

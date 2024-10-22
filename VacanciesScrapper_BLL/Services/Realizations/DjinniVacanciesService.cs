@@ -48,8 +48,8 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 				var companyImgNode = node.SelectSingleNode(".//img[@class='userpic-image userpic-image_img']");
                 var companyImg = companyImgNode is null ? "https://ui-avatars.com/api/?name=" + company : companyImgNode.Attributes["src"].Value; 
                 //var date = await GetVacancyCreationDate(link);
-                //var fullDescription = await GetFullDescription(link);
-				//var fit = await AnalyzingVacancyByAI(fullDescription);
+                var fullDescription = await GetFullDescription(link);
+				var fit = await AnalyzingVacancyByAI(fullDescription);
 
                 CodeCleaner.ScrubHtml(ref title);
                 CodeCleaner.ScrubHtml(ref location);
@@ -66,7 +66,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
                     Link = link,
                     Salary = salary,
                     CompanyImg = companyImg,
-					//fitByCv = fit,
+					fitByCv = fit,
                     //CreationDate = date,
                     //Description = fullDescription
                 });
