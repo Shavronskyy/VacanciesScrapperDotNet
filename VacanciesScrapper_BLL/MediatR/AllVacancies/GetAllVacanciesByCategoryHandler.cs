@@ -1,5 +1,6 @@
 using FluentResults;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
 using VacanciesScrapper_BLL.Services.Logging;

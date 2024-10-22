@@ -31,7 +31,8 @@ namespace VacanciesScrapper_Web.Controllers
                 var result = await response.Content.ReadFromJsonAsync<List<VacancyViewModel>>();
                 return View(result);
             }
-
+            
+            _logger.LogInformation("Vacancies not found");
             return View(new List<VacancyViewModel>());
         }
     }

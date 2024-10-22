@@ -11,7 +11,6 @@ namespace VacanciesScrapper_WebApi.Controllers
     [Route("api/[controller]/[action]")]
     public class AllVacanciesController : BaseApiController
     {
-
         private readonly ILogger<AllVacanciesController> _logger;
 
         public AllVacanciesController(ILogger<AllVacanciesController> logger, IHomeVacanciesService homeService)

@@ -1,8 +1,4 @@
-﻿using System.Reflection;
-using MediatR;
-using Serilog;
-using VacanciesScrapper_BLL.MediatR.JobSites.Djinni;
-using VacanciesScrapper_BLL.Services.Interfaces;
+﻿using VacanciesScrapper_BLL.Services.Interfaces;
 using VacanciesScrapper_BLL.Services.Logging;
 using VacanciesScrapper_BLL.Services.Realizations;
 using VacanciesScrapper_BLL.Options;
@@ -28,8 +24,7 @@ public class Program
         builder.Services.AddLogging();
 
         var currentAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-        builder.Services.AddSingleton(Log.Logger);
+        
         builder.Services.AddTransient<IHomeVacanciesService, HomeVacanciesService>();
         builder.Services.AddTransient<IDjinniVacanciesService, DjinniVacanciesService>();
         builder.Services.AddTransient<IDouVacanciesService, DouVacanciesService>();
@@ -50,7 +45,6 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
