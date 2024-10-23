@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using VacanciesScrapper_BLL.Enums;
+using VacanciesScrapper_Utils.Enums;
 using VacanciesScrapper_Web.Config;
 using VacanciesScrapper_Web.Models;
 

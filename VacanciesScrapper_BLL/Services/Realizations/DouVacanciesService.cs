@@ -1,20 +1,22 @@
-﻿using FluentResults;
-using HtmlAgilityPack;
-using VacanciesScrapper_BLL.Enums;
+﻿using HtmlAgilityPack;
+using VacanciesScrapper_Utils.Enums;
+using VacanciesScrapper_Utils.Utils;
 using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
+using VacanciesScrapper_BLL.Services.Logging;
 using VacanciesScrapper_BLL.Switches;
-using VacanciesScrapper_BLL.Utils;
 
 namespace VacanciesScrapper_BLL.Services.Realizations
 {
 	public class DouVacanciesService : IDouVacanciesService
     {
         private IScrapperService _scrapperService;
+        private ILoggerService _logger;
         
-		public DouVacanciesService(IScrapperService scrapperService)
+		public DouVacanciesService(IScrapperService scrapperService, ILoggerService logger)
         {
             _scrapperService = scrapperService;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<Vacancy>> GetAllDouVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
@@ -29,6 +31,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 
             if (nodes is null)
             {
+                _logger.LogError(nodes, "nodes not found");
                 return vacancy;
             }
 

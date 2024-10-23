@@ -1,5 +1,5 @@
 ﻿using System;
-using VacanciesScrapper_BLL.Enums;
+using VacanciesScrapper_Utils.Enums;
 
 namespace VacanciesScrapper_BLL.Switches
 {

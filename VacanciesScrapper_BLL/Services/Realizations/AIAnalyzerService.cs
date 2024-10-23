@@ -3,7 +3,7 @@ using GroqSharp.Models;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using Microsoft.Extensions.Options;
-using VacanciesScrapper_BLL.Options;
+using VacanciesScrapper_Utils.Options;
 using VacanciesScrapper_BLL.Services.Interfaces;
 
 namespace VacanciesScrapper_BLL.Services.Realizations
@@ -20,7 +20,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
         public async Task<int> AnalyzeVacancyAnswerInPrecents(string description)
     {
         
-        var pdf = "file:///Users/shavronskyy/Downloads/Shavronskyy_SalesManager.pdf";
+        var pdf = _options.CvUrl;
 
         var result = ExtractTextFromPdf(pdf);
 

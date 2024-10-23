@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace VacanciesScrapper_BLL.Utils
+namespace VacanciesScrapper_Utils.Utils
 {
 	public class CodeCleaner
 	{

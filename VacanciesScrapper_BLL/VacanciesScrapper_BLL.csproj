@@ -26,4 +26,8 @@
   <ItemGroup>
     <None Remove="MediatR\AllVacancies\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VacanciesScrapper_Utils\VacanciesScrapper_Utils.csproj" />
+  </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 ﻿using VacanciesScrapper_BLL.Services.Interfaces;
 using VacanciesScrapper_BLL.Services.Logging;
 using VacanciesScrapper_BLL.Services.Realizations;
-using VacanciesScrapper_BLL.Options;
+using VacanciesScrapper_Utils.Options;
 
 namespace VacanciesScrapper_WebApi
 {

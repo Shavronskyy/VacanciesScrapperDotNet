@@ -1,5 +1,3 @@
-using System.Reflection;
-using VacanciesScrapper_BLL.Options;
 using VacanciesScrapper_Web.Config;
 
 namespace VacanciesScrapper_Web

@@ -1,10 +1,10 @@
 ﻿using HtmlAgilityPack;
-using VacanciesScrapper_BLL.Enums;
+using VacanciesScrapper_Utils.Enums;
 using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
 using VacanciesScrapper_BLL.Services.Logging;
 using VacanciesScrapper_BLL.Switches;
-using VacanciesScrapper_BLL.Utils;
+using VacanciesScrapper_Utils.Utils;
 
 namespace VacanciesScrapper_BLL.Services.Realizations
 {
@@ -33,6 +33,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 
             if (nodes is null)
 			{
+				_logger.LogError(nodes, "nodes not found");
 				return result;
 			}
 
