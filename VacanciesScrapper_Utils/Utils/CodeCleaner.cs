@@ -5,10 +5,6 @@ namespace VacanciesScrapper_Utils.Utils
 {
 	public class CodeCleaner
 	{
-		public CodeCleaner()
-		{
-		}
-
         public static void ScrubHtml(ref string value)
         {
             var step1 = Regex.Replace(value, @"<[^>]+>|&nbsp;", "").Trim();

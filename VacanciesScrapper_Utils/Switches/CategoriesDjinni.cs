@@ -5,11 +5,6 @@ namespace VacanciesScrapper_BLL.Switches
 {
 	public class CategoriesDjinni
 	{
-		public CategoriesDjinni()
-		{
-
-		}
-
 		public static string GetCategory(Categories? cat)
 		{
 			switch (cat)

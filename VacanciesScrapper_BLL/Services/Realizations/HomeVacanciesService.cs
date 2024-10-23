@@ -6,8 +6,8 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 {
 	public class HomeVacanciesService : IHomeVacanciesService
 	{
-		public IDouVacanciesService _douService;
-		public IDjinniVacanciesService _djinniService;
+		private IDouVacanciesService _douService;
+		private IDjinniVacanciesService _djinniService;
 		
 		public HomeVacanciesService(IDouVacanciesService douService, IDjinniVacanciesService djinniService)
 		{

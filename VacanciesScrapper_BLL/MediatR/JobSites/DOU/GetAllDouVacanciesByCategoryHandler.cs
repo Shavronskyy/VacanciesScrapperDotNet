@@ -9,8 +9,8 @@ namespace VacanciesScrapper_BLL.MediatR.JobSites.DOU
 {
     public class GetAllDouVacanciesByCategoryHandler : IRequestHandler<GetAllDouVacanciesByCategoryQuery, Result<IEnumerable<Vacancy>>>
     {
-        private IDouVacanciesService _douService;
-        private ILoggerService _logger;
+        private readonly IDouVacanciesService _douService;
+        private readonly ILoggerService _logger;
 
         public GetAllDouVacanciesByCategoryHandler(IDouVacanciesService douService, ILoggerService logger)
         {

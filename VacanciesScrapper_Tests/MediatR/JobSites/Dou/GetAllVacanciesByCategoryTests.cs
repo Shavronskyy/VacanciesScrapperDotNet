@@ -10,8 +10,8 @@ namespace VacanciesScrapper_Tests.MediatR.JobSites.Dou
 {
     public class GetAllVacanciesByCategoryTests
     {
-        private Mock<IDouVacanciesService> _serviceMock;
-        private Mock<ILoggerService> _logger;
+        private readonly Mock<IDouVacanciesService> _serviceMock;
+        private readonly Mock<ILoggerService> _logger;
     
         public GetAllVacanciesByCategoryTests()
     {

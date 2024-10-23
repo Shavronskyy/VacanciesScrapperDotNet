@@ -9,8 +9,8 @@ namespace VacanciesScrapper_Tests.MediatR.JobSites.Djinni
 {
 	public class GetAllDjinniVacanciesByCategoryTests
 	{
-        private Mock<IDjinniVacanciesService> _serviceMock;
-        private Mock<ILoggerService> _logger;
+        private readonly Mock<IDjinniVacanciesService> _serviceMock;
+        private readonly Mock<ILoggerService> _logger;
 
         public GetAllDjinniVacanciesByCategoryTests()
 		{

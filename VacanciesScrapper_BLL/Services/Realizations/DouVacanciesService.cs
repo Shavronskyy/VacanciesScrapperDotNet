@@ -12,9 +12,9 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 {
     public class DouVacanciesService : IDouVacanciesService
     {
-        private IScrapperService _scrapperService;
-        private ILoggerService _logger;
-        private JobSitesUrlsOptions _options;
+        private readonly IScrapperService _scrapperService;
+        private readonly ILoggerService _logger;
+        private readonly JobSitesUrlsOptions _options;
 
         public DouVacanciesService(IScrapperService scrapperService, ILoggerService logger,
             IOptions<JobSitesUrlsOptions> options)

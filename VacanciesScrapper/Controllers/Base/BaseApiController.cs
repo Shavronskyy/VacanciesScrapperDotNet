@@ -21,7 +21,7 @@ namespace VacanciesScrapper_WebApi.Controllers.Base
                 return Ok(result.Value);
             }
 
-            return (result.Value is null) ?
+            return result.Value is null ?
                 NotFound("Found result matching null") : Ok(result.Value);
         }
 

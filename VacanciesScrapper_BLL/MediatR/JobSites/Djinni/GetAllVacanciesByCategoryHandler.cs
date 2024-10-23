@@ -8,8 +8,8 @@ namespace VacanciesScrapper_BLL.MediatR.JobSites.Djinni
 {
     public class GetAllDjinniVacanciesByCategoryHandler : IRequestHandler<GetAllDjinniVacanciesByCategoryQuery, Result<IEnumerable<Vacancy>>>
     {
-        private IDjinniVacanciesService _djinniService;
-        private ILoggerService _logger;
+        private readonly IDjinniVacanciesService _djinniService;
+        private readonly ILoggerService _logger;
 
         public GetAllDjinniVacanciesByCategoryHandler(IDjinniVacanciesService djinniService, ILoggerService logger)
         {

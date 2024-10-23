@@ -8,8 +8,8 @@ namespace VacanciesScrapper_BLL.MediatR.JobSites.AllVacancies
 {
     public class GetAllVacanciesByCategoryHandler : IRequestHandler<GetAllVacanciesByCategoryQuery, Result<IEnumerable<Vacancy>>>
     {
-        private IHomeVacanciesService _homeService;
-        private ILoggerService _logger;
+        private readonly IHomeVacanciesService _homeService;
+        private readonly ILoggerService _logger;
     
         public GetAllVacanciesByCategoryHandler(IHomeVacanciesService homeService, ILoggerService logger)
         {
@@ -23,7 +23,7 @@ namespace VacanciesScrapper_BLL.MediatR.JobSites.AllVacancies
 
             if (!vacancies.Any())
             {
-                const string errorMsg = $"Cannot find any vacancies";
+                const string errorMsg = "Cannot find any vacancies";
                 _logger.LogError(request, errorMsg);
                 return Result.Ok(Enumerable.Empty<Vacancy>());
             }

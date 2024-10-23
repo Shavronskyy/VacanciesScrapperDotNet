@@ -12,9 +12,9 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 {
     public class DjinniVacanciesService : IDjinniVacanciesService
     {
-        private IScrapperService _scrapperService;
-        private IAIAnalyzerService _aiService;
-        private ILoggerService _logger;
+        private readonly IScrapperService _scrapperService;
+        private readonly IAIAnalyzerService _aiService;
+        private readonly ILoggerService _logger;
         private readonly JobSitesUrlsOptions _options;
 
         public DjinniVacanciesService(IScrapperService scrapperService, IAIAnalyzerService aiService,

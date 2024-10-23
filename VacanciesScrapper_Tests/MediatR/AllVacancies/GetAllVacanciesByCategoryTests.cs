@@ -10,8 +10,8 @@ namespace VacanciesScrapper_Tests.MediatR.AllVacancies
 {
 	public class GetAllVacanciesByCategoryTests
 	{
-        private Mock<IHomeVacanciesService> _serviceMock;
-        private Mock<ILoggerService> _loggerMock;
+        private readonly Mock<IHomeVacanciesService> _serviceMock;
+        private readonly Mock<ILoggerService> _loggerMock;
 
 		public GetAllVacanciesByCategoryTests()
 		{

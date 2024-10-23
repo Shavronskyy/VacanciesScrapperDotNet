@@ -49,20 +49,18 @@ namespace VacanciesScrapper_BLL.Services.Realizations
             return Convert.ToInt32(response);
         }
 
-        static string ExtractTextFromPdf(string pdfPath)
+        private static string ExtractTextFromPdf(string pdfPath)
         {
-            using (var pdfReader = new PdfReader(pdfPath))
-            using (var pdfDocument = new PdfDocument(pdfReader))
+            using var pdfReader = new PdfReader(pdfPath);
+            using var pdfDocument = new PdfDocument(pdfReader);
+            var writer = new StringWriter();
+            for (var i = 1; i <= pdfDocument.GetNumberOfPages(); i++)
             {
-                StringWriter writer = new StringWriter();
-                for (int i = 1; i <= pdfDocument.GetNumberOfPages(); i++)
-                {
-                    var pageText = PdfTextExtractor.GetTextFromPage(pdfDocument.GetPage(i));
-                    writer.Write(pageText);
-                }
-
-                return writer.ToString();
+                var pageText = PdfTextExtractor.GetTextFromPage(pdfDocument.GetPage(i));
+                writer.Write(pageText);
             }
+
+            return writer.ToString();
         }
     }
 }
