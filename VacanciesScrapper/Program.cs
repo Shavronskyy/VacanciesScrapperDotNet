@@ -16,6 +16,7 @@ namespace VacanciesScrapper_WebApi
 
         builder.Configuration.AddUserSecrets<Program>();
         builder.Services.Configure<AIOptions>(builder.Configuration.GetSection(AIOptions.Key));
+        builder.Services.Configure<JobSitesUrlsOptions>(builder.Configuration.GetSection(JobSitesUrlsOptions.Key));
         
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
