@@ -1,4 +1,4 @@
-﻿using VacanciesScrapper_BLL.Enums;
+﻿using VacanciesScrapper_Utils.Enums;
 using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
 
@@ -6,8 +6,8 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 {
 	public class HomeVacanciesService : IHomeVacanciesService
 	{
-		public IDouVacanciesService _douService;
-		public IDjinniVacanciesService _djinniService;
+		private IDouVacanciesService _douService;
+		private IDjinniVacanciesService _djinniService;
 		
 		public HomeVacanciesService(IDouVacanciesService douService, IDjinniVacanciesService djinniService)
 		{

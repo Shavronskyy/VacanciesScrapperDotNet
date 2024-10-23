@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace VacanciesScrapper_BLL.Enums
+namespace VacanciesScrapper_Utils.Enums
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Categories
 	{
 		None,
-		DOTNET,
+		Dotnet,
 		Java,
 		Angular,
 		JavaScript,
@@ -14,13 +14,13 @@ namespace VacanciesScrapper_BLL.Enums
 		Vue,
 		FullStack,
 		Python,
-		PHP,
+		Php,
 		Node,
-		IOS,
+		Ios,
 		Android,
 		ReactNative,
 		C,
-		CPP,
+		Cpp,
 		Flutter,
 		Golang,
 		Ruby,

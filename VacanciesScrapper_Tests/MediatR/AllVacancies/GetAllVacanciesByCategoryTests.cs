@@ -1,6 +1,6 @@
 ﻿using System;
 using Moq;
-using VacanciesScrapper_BLL.Enums;
+using VacanciesScrapper_Utils.Enums;
 using VacanciesScrapper_BLL.MediatR.JobSites.AllVacancies;
 using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
@@ -10,8 +10,8 @@ namespace VacanciesScrapper_Tests.MediatR.AllVacancies
 {
 	public class GetAllVacanciesByCategoryTests
 	{
-        private Mock<IHomeVacanciesService> _serviceMock;
-        private Mock<ILoggerService> _loggerMock;
+        private readonly Mock<IHomeVacanciesService> _serviceMock;
+        private readonly Mock<ILoggerService> _loggerMock;
 
 		public GetAllVacanciesByCategoryTests()
 		{
@@ -23,7 +23,7 @@ namespace VacanciesScrapper_Tests.MediatR.AllVacancies
         public async Task Handler_ShouldReturnErrorMsg_WhenVacanciesIsNull()
         {
             // Arrange
-            var query = new GetAllVacanciesByCategoryQuery(Categories.DOTNET, YearsOfExperience.LessThanOne);
+            var query = new GetAllVacanciesByCategoryQuery(Categories.Dotnet, YearsOfExperience.LessThanOne);
             var handler = new GetAllVacanciesByCategoryHandler(_serviceMock.Object, _loggerMock.Object);
             var expectedErrorMessage = $"Cannot find any vacancies";
 

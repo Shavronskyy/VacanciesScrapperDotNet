@@ -1,8 +1,9 @@
 ﻿using HtmlAgilityPack;
 
-namespace VacanciesScrapper_BLL.Services.Interfaces;
-
-public interface IScrapperService
+namespace VacanciesScrapper_BLL.Services.Interfaces
 {
-    Task<HtmlDocument> GetHtml(string link);
+    public interface IScrapperService
+    {
+        Task<HtmlDocument> GetHtml(string link);
+    }
 }

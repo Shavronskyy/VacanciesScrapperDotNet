@@ -1,4 +1,4 @@
-using VacanciesScrapper_BLL.Enums;
+using VacanciesScrapper_Utils.Enums;
 using VacanciesScrapper_BLL.MediatR.JobSites.DOU;
 using VacanciesScrapper_BLL.Services.Interfaces;
 using Moq;
@@ -6,24 +6,24 @@ using Xunit;
 using VacanciesScrapper_BLL.Services.Logging;
 using VacanciesScrapper_BLL.Models;
 
-namespace VacanciesScrapper_Tests.MediatR.JobSites.Dou;
-
-public class GetAllVacanciesByCategoryTests
+namespace VacanciesScrapper_Tests.MediatR.JobSites.Dou
 {
-    private Mock<IDouVacanciesService> _serviceMock;
-    private Mock<ILoggerService> _logger;
+    public class GetAllVacanciesByCategoryTests
+    {
+        private readonly Mock<IDouVacanciesService> _serviceMock;
+        private readonly Mock<ILoggerService> _logger;
     
-    public GetAllVacanciesByCategoryTests()
+        public GetAllVacanciesByCategoryTests()
     {
         _serviceMock = new();
         _logger = new();
     }
 
-    [Fact]
-    public async Task Handler_ShouldReturnErrorMsg_WhenVacanciesIsNull()
+        [Fact]
+        public async Task Handler_ShouldReturnErrorMsg_WhenVacanciesIsNull()
     {
         // Arrange
-        var query = new GetAllDouVacanciesByCategoryQuery(Categories.DOTNET, YearsOfExperience.LessThanOne);
+        var query = new GetAllDouVacanciesByCategoryQuery(Categories.Dotnet, YearsOfExperience.LessThanOne);
         var handler = new GetAllDouVacanciesByCategoryHandler(_serviceMock.Object, _logger.Object);
         var expectedErrorMessage = $"Cannot find any vacancies";
 
@@ -38,5 +38,6 @@ public class GetAllVacanciesByCategoryTests
             Assert.True(result.IsFailed);
             Assert.Equal(expectedErrorMessage, result.Errors.FirstOrDefault()?.Message);
         });
+    }
     }
 }
