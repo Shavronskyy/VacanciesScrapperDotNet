@@ -6,7 +6,7 @@ namespace VacanciesScrapper_BLL.MediatR.ResultVariations
     {
         public NullResult()
             : base()
-    {
-    }
+        {
+        }
     }
 }

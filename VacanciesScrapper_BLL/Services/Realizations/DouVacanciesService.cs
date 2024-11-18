@@ -67,7 +67,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
                     CreationDate = date,
                     Title = title,
                     Location = location,
-                    shortDescription = shortDescription,
+                    ShortDescription = shortDescription,
                     Company = company,
                     Link = link,
                     Salary = salary,

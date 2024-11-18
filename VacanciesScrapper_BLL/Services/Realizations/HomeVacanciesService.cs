@@ -8,7 +8,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 	{
 		private IDouVacanciesService _douService;
 		private IDjinniVacanciesService _djinniService;
-		
+
 		public HomeVacanciesService(IDouVacanciesService douService, IDjinniVacanciesService djinniService)
 		{
 			_douService = douService;
@@ -19,7 +19,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 		{
 			var douVacancies = await _douService.GetAllDouVacanciesByCategory(cat, exp);
 			var djinniVacancies = await _djinniService.GetAllDjinniVacanciesByCategory(cat, exp);
-			
+
 			return douVacancies.Concat(djinniVacancies);
 		}
 	}

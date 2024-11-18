@@ -9,18 +9,13 @@ namespace VacanciesScrapper_WebApi.Controllers
     [Route("api/[controller]/[action]")]
     public class DouController : BaseApiController
     {
-
-        private readonly ILogger<DouController> _logger;
-
-        public DouController(ILogger<DouController> logger)
-        {
-            _logger = logger;
-        }
-
-        [HttpGet(Name = "GetAllDouVacanciesByCategory")]
+        [HttpGet(Name = "GeVacanciesByCategory")]
         public async Task<IActionResult> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
-            return HandleResult(await Mediator.Send(new GetAllDouVacanciesByCategoryQuery(cat, exp)));
+            var query = new GetAllDouVacanciesByCategoryQuery(cat, exp);
+            var vacanciesResult = await Mediator.Send(query);
+
+            return HandleResult(vacanciesResult);
         }
     }
 }

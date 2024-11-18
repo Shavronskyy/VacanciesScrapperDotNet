@@ -13,9 +13,9 @@ namespace VacanciesScrapper_Web
             builder.Configuration.AddUserSecrets<Program>();
             builder.Services.AddOptions<UrlsOptions>()
                 .Bind(builder.Configuration.GetSection(UrlsOptions.Key));
-            
+
             builder.Services.AddControllersWithViews();
-            
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

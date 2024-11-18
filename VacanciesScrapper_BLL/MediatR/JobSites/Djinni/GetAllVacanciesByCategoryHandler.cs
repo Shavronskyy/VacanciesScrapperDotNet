@@ -27,7 +27,7 @@ namespace VacanciesScrapper_BLL.MediatR.JobSites.Djinni
                 _logger.LogError(request, errorMsg);
                 return Result.Ok(Enumerable.Empty<Vacancy>());
             }
-        
+
             return Result.Ok(vacancies);
         }
     }

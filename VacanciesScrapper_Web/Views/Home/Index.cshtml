@@ -52,10 +52,10 @@
                 <div class="vacancy-description">
                     <strong>@vacancy.shortDescription</strong><br />
                     <strong>AI: Fit for you by CV on
-                        <span class = @(vacancy.fitByCv >= 70 ? "text-success" : 
-                                        vacancy.fitByCv >= 30 ? "text-warning" : "text-danger")
+                        <span class = @(vacancy.FitByCv >= 70 ? "text-success" : 
+                                        vacancy.FitByCv >= 30 ? "text-warning" : "text-danger")
                         >
-                        @vacancy.fitByCv%</span></strong>
+                        @vacancy.FitByCv%</span></strong>
                 </div>
                 <div class="mt-2">
                     <a class="btn btn-primary seefullbutton" href="@vacancy.Link" target="_blank">

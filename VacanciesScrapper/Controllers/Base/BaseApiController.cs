@@ -13,19 +13,19 @@ namespace VacanciesScrapper_WebApi.Controllers.Base
             HttpContext.RequestServices.GetService<IMediator>()!;
 
         protected ActionResult HandleResult<T>(Result<T> result)
-    {
-        if (result.IsSuccess)
         {
-            if(result is NullResult<T>)
+            if (result.IsSuccess)
             {
-                return Ok(result.Value);
+                if (result is NullResult<T>)
+                {
+                    return Ok(result.Value);
+                }
+
+                return result.Value is null ?
+                    NotFound("Found result matching null") : Ok(result.Value);
             }
 
-            return result.Value is null ?
-                NotFound("Found result matching null") : Ok(result.Value);
+            return BadRequest(result.Reasons);
         }
-
-        return BadRequest(result.Reasons);
-    }
     }
 }

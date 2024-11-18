@@ -4,13 +4,13 @@ using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
 using VacanciesScrapper_BLL.Services.Logging;
 
-namespace VacanciesScrapper_BLL.MediatR.JobSites.AllVacancies
+namespace VacanciesScrapper_BLL.MediatR.AllVacancies
 {
     public class GetAllVacanciesByCategoryHandler : IRequestHandler<GetAllVacanciesByCategoryQuery, Result<IEnumerable<Vacancy>>>
     {
         private readonly IHomeVacanciesService _homeService;
         private readonly ILoggerService _logger;
-    
+
         public GetAllVacanciesByCategoryHandler(IHomeVacanciesService homeService, ILoggerService logger)
         {
             _homeService = homeService;

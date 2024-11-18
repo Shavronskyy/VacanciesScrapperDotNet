@@ -6,5 +6,7 @@ namespace VacanciesScrapper_Utils.Options
         public string APIKEY { get; }
         public string Model { get; }
         public string CvUrl { get; }
+        public string SystemContent { get; }
+        public string AssistantContent { get; }
     }
 }

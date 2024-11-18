@@ -6,7 +6,7 @@
 
         public string Description { get; set; }
     
-        public string shortDescription { get; set; }
+        public string ShortDescription { get; set; }
     
         public string Company { get; set; }
 		
@@ -20,6 +20,6 @@
 
         public string Link { get; set; }
 
-        public int fitByCv { get; set; }
+        public int FitByCv { get; set; }
     }
 }

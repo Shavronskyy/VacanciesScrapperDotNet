@@ -73,12 +73,12 @@ namespace VacanciesScrapper_BLL.Services.Realizations
                 {
                     Title = title,
                     Location = location,
-                    shortDescription = shortDescription,
+                    ShortDescription = shortDescription,
                     Company = company,
                     Link = link,
                     Salary = salary,
                     CompanyImg = companyImg,
-                    fitByCv = fit,
+                    FitByCv = fit,
                     //CreationDate = date,
                     //Description = fullDescription
                 });
