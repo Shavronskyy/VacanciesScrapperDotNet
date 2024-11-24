@@ -9,7 +9,7 @@ namespace VacanciesScrapper_WebApi.Controllers
     [Route("api/[controller]/[action]")]
     public class DouController : BaseApiController
     {
-        [HttpGet(Name = "GeVacanciesByCategory")]
+        [HttpGet(Name = "GetAllDouVacanciesByCategory")]
         public async Task<IActionResult> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
             var query = new GetAllDouVacanciesByCategoryQuery(cat, exp);

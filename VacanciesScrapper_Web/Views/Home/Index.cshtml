@@ -6,25 +6,37 @@
         <h1 class="text-center">Junior's tears</h1>
         <h3 class="text-center">Vacancies for junior software developers. With love</h3>
     </div>
-    <div>
-        <h4>Select Category:</h4>
-        <form asp-controller="Home" asp-action="Index" method="get" style="display: inline;">
-            <input type="hidden" name="cat" value="@Categories.Dotnet" />
-            <button type="submit">.NET</button>
-        </form>
 
-        <form asp-controller="Home" asp-action="Index" method="get" style="display: inline;">
-            <input type="hidden" name="cat" value="@Categories.Java" />
-            <button type="submit">Java</button>
-        </form>
+    <!-- Form for category and experience selection -->
+    <form method="get" class="w-50 mx-auto">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="category-picker">
+                    <h4>Select Category:</h4>
+                    <select name="cat" id="categorySelect" class="form-select">
+                        <option value="Dotnet">DotNet</option>
+                        <option value="Java">Java</option>
+                        <option value="Python">Python</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="experience picker">
+                    <h4>Select Experience:</h4>
+                    <select name="exp" id="experienceSelect" class="form-select">
+                        <option value="LessThanOne">Less than 1 year</option>
+                        <option value="OneToThree">1 to 3 years</option>
+                        <option value="ThreeToFive">3 to 5 years</option>
+                        <option value="MoreThanFive">More than 5 years</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="mt-2 mb-2 text-center">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </form>
 
-        <form asp-controller="Home" asp-action="Index" method="get" style="display: inline;">
-            <input type="hidden" name="cat" value="@Categories.Python" />
-            <button type="submit">Python</button>
-        </form>
-
-        <!-- Add more category buttons as needed -->
-    </div>
     <div>
         @foreach (var vacancy in Model)
         {
@@ -35,7 +47,6 @@
                     <div style="display: flex; gap: 10px;">
                         <strong>Company: @vacancy.Company</strong>
                         <strong>Location: @vacancy.Location</strong><br>
-                        <!--<strong>Posted:</strong> October 10, 2024-->
                     </div>
                 </div>
 
@@ -51,11 +62,13 @@
                 <!-- Short Description -->
                 <div class="vacancy-description">
                     <strong>@vacancy.shortDescription</strong><br />
-                    <strong>AI: Fit for you by CV on
-                        <span class = @(vacancy.FitByCv >= 70 ? "text-success" : 
-                                        vacancy.FitByCv >= 30 ? "text-warning" : "text-danger")
-                        >
-                        @vacancy.FitByCv%</span></strong>
+                    <strong>
+                        AI: Fit for you by CV on
+                        <span class=@(vacancy.FitByCv >= 70 ? "text-success" :
+                          vacancy.FitByCv >= 30 ? "text-warning" : "text-danger")>
+                            @vacancy.FitByCv%
+                        </span>
+                    </strong>
                 </div>
                 <div class="mt-2">
                     <a class="btn btn-primary seefullbutton" href="@vacancy.Link" target="_blank">
@@ -65,5 +78,4 @@
             </div>
         }
     </div>
-
 </div>

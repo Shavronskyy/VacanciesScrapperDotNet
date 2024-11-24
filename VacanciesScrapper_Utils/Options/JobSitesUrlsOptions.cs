@@ -3,6 +3,6 @@
 public class JobSitesUrlsOptions
 {
     public const string Key = "JobSitesURLs";
-    public string DjinniBaseUrl { get; }
-    public string DouBaseUrl { get; }
+    public string DjinniBaseUrl { get; set; }
+    public string DouBaseUrl { get; set; }
 }

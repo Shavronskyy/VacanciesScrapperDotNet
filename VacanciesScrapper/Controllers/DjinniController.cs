@@ -11,7 +11,7 @@ namespace VacanciesScrapper_WebApi.Controllers
     [Route("api/[controller]/[action]")]
     public class DjinniController : BaseApiController
     {
-        [HttpGet(Name = "GeVacanciesByCategory")]
+        [HttpGet(Name = "GetAllDjinniVacanciesByCategory")]
         public async Task<IActionResult> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
             var query = new GetAllDjinniVacanciesByCategoryQuery(cat, exp);

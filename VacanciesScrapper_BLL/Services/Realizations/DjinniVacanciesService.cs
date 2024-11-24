@@ -28,6 +28,11 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 
         public async Task<IEnumerable<Vacancy>> GetAllDjinniVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
+            Console.WriteLine("==========================================================================");
+            Console.WriteLine(_options.DjinniBaseUrl);
+            Console.WriteLine(_options.DouBaseUrl);
+            Console.WriteLine("==========================================================================");
+
             var url = _options.DjinniBaseUrl + CategoriesDjinni.GetCategory(cat) + CategoriesDjinni.GetExperience(exp);
 
             var document = await _scrapperService.GetHtml(url);
@@ -60,8 +65,8 @@ namespace VacanciesScrapper_BLL.Services.Realizations
                     ? "https://ui-avatars.com/api/?name=" + company
                     : companyImgNode.Attributes["src"].Value;
                 //var date = await GetVacancyCreationDate(link);
-                var fullDescription = await GetFullDescription(link);
-                var fit = await AnalyzingVacancyByAI(fullDescription);
+                //var fullDescription = await GetFullDescription(link);
+                //var fit = await AnalyzingVacancyByAI(fullDescription);
 
                 CodeCleaner.ScrubHtml(ref title);
                 CodeCleaner.ScrubHtml(ref location);
@@ -78,7 +83,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
                     Link = link,
                     Salary = salary,
                     CompanyImg = companyImg,
-                    FitByCv = fit,
+                    //FitByCv = fit,
                     //CreationDate = date,
                     //Description = fullDescription
                 });

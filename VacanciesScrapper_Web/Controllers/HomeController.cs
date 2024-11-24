@@ -21,17 +21,21 @@ namespace VacanciesScrapper_Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] Categories cat, YearsOfExperience exp )
+        public async Task<IActionResult> Index([FromQuery] Categories cat, [FromQuery]YearsOfExperience exp )
         {
-            var requestUri = _options.GetAllVacanciesUrl;
-            var response = _client.GetAsync(requestUri).Result;
+            if (cat == null) cat = Categories.Dotnet;
+            if (exp == null) exp = YearsOfExperience.LessThanOne;
+
+            var requestUri = $"{_options.GetAllVacanciesUrl}?cat={cat}&exp={exp}";
+
+            var response = await _client.GetAsync(requestUri);
 
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<List<VacancyViewModel>>();
                 return View(result);
             }
-            
+
             _logger.LogInformation("Vacancies not found");
             return View(new List<VacancyViewModel>());
         }
