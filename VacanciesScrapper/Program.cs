@@ -2,6 +2,7 @@
 using VacanciesScrapper_BLL.Services.Logging;
 using VacanciesScrapper_BLL.Services.Realizations;
 using VacanciesScrapper_Utils.Options;
+using VacanciesScrapper_Web.Config;
 
 namespace VacanciesScrapper_WebApi
 {
@@ -15,6 +16,7 @@ namespace VacanciesScrapper_WebApi
             builder.Services.AddHttpClient();
 
             builder.Configuration.AddUserSecrets<Program>();
+            builder.Services.Configure<UrlsOptions>(builder.Configuration.GetSection(UrlsOptions.Key));
             builder.Services.Configure<AIOptions>(builder.Configuration.GetSection(AIOptions.Key));
             builder.Services.Configure<JobSitesUrlsOptions>(builder.Configuration.GetSection(JobSitesUrlsOptions.Key));
 

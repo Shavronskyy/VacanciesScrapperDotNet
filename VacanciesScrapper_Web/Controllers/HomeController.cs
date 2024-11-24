@@ -23,7 +23,7 @@ namespace VacanciesScrapper_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] Categories cat, [FromQuery]YearsOfExperience exp )
         {
-            if (cat == null) cat = Categories.Dotnet;
+            if (cat == null) cat = Categories.Java;
             if (exp == null) exp = YearsOfExperience.LessThanOne;
 
             var requestUri = $"{_options.GetAllVacanciesUrl}?cat={cat}&exp={exp}";

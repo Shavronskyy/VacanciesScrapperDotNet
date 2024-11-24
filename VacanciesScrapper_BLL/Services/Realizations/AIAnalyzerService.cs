@@ -20,7 +20,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
         {
             var pdf = _options.CvUrl;
 
-            var result = ExtractTextFromPdf(pdf);
+            var extractedCV = ExtractTextFromPdf(pdf);
 
             var groqClient = new GroqClient(_options.APIKEY, _options.Model);
 
@@ -33,12 +33,12 @@ namespace VacanciesScrapper_BLL.Services.Realizations
                 new Message
                 {
                     Role = MessageRoleType.Assistant,
-                    Content = _options.AssistantContent
+                    Content = _options.AssistantContent + extractedCV
                 },
                 new Message
                 {
                     Role = MessageRoleType.User,
-                    Content = "CV:" + result + " " + "Vacancy description" + description
+                    Content = "Vacancy description: " + description
                 });
             return Convert.ToInt32(response);
         }
