@@ -3,28 +3,29 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VacanciesScrapper_BLL.MediatR.ResultVariations;
 
-namespace VacanciesScrapper_WebApi.Controllers.Base;
-
-public class BaseApiController : ControllerBase
+namespace VacanciesScrapper_WebApi.Controllers.Base
 {
-    private IMediator? _mediator;
-
-    protected IMediator Mediator => _mediator ??=
-        HttpContext.RequestServices.GetService<IMediator>()!;
-
-    protected ActionResult HandleResult<T>(Result<T> result)
+    public class BaseApiController : ControllerBase
     {
-        if (result.IsSuccess)
+        private IMediator? _mediator;
+
+        protected IMediator Mediator => _mediator ??=
+            HttpContext.RequestServices.GetService<IMediator>()!;
+
+        protected ActionResult HandleResult<T>(Result<T> result)
         {
-            if(result is NullResult<T>)
+            if (result.IsSuccess)
             {
-                return Ok(result.Value);
+                if (result is NullResult<T>)
+                {
+                    return Ok(result.Value);
+                }
+
+                return result.Value is null ?
+                    NotFound("Found result matching null") : Ok(result.Value);
             }
 
-            return (result.Value is null) ?
-                NotFound("Found result matching null") : Ok(result.Value);
+            return BadRequest(result.Reasons);
         }
-
-        return BadRequest(result.Reasons);
     }
 }

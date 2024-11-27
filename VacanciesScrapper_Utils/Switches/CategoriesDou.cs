@@ -1,5 +1,5 @@
 ﻿using System;
-using VacanciesScrapper_BLL.Enums;
+using VacanciesScrapper_Utils.Enums;
 
 namespace VacanciesScrapper_BLL.Switches
 {
@@ -9,7 +9,7 @@ namespace VacanciesScrapper_BLL.Switches
         {
             switch (cat)
             {
-                case Categories.DOTNET:
+                case Categories.Dotnet:
                     return "vacancies/?category=.NET";
                 case Categories.Angular:
                     return "vacancies/?category=Angular";
@@ -25,11 +25,11 @@ namespace VacanciesScrapper_BLL.Switches
                     return "vacancies/?category=Java";
                 case Categories.Python:
                     return "vacancies/?category=Python";
-                case Categories.PHP:
+                case Categories.Php:
                     return "vacancies/?category=PHP";
                 case Categories.Node:
                     return "vacancies/?category=Node.js";
-                case Categories.IOS:
+                case Categories.Ios:
                     return "vacancies/?category=iOS";
                 case Categories.Android:
                     return "vacancies/?category=Android";
@@ -37,7 +37,7 @@ namespace VacanciesScrapper_BLL.Switches
                     return "vacancies/?category=React+Native";
                 case Categories.C:
                     return "vacancies/?category=C+Lang";
-                case Categories.CPP:
+                case Categories.Cpp:
                     return "vacancies/?category=CPP";
                 case Categories.Flutter:
                     return "vacancies/?category=Flutter";

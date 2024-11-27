@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VacanciesScrapper_BLL.Enums;
+using VacanciesScrapper_Utils.Enums;
 using VacanciesScrapper_BLL.MediatR.JobSites.DOU;
 using VacanciesScrapper_WebApi.Controllers.Base;
 
@@ -9,18 +9,13 @@ namespace VacanciesScrapper_WebApi.Controllers
     [Route("api/[controller]/[action]")]
     public class DouController : BaseApiController
     {
-
-        private readonly ILogger<DouController> _logger;
-
-        public DouController(ILogger<DouController> logger)
-        {
-            _logger = logger;
-        }
-
         [HttpGet(Name = "GetAllDouVacanciesByCategory")]
         public async Task<IActionResult> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
-            return HandleResult(await Mediator.Send(new GetAllDouVacanciesByCategoryQuery(cat, exp)));
+            var query = new GetAllDouVacanciesByCategoryQuery(cat, exp);
+            var vacanciesResult = await Mediator.Send(query);
+
+            return HandleResult(vacanciesResult);
         }
     }
 }

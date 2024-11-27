@@ -1,40 +1,17 @@
-using Serilog;
 
-namespace VacanciesScrapper_BLL.Services.Logging;
+using Microsoft.Extensions.Logging;
 
-public class LoggerService : ILoggerService
+namespace VacanciesScrapper_BLL.Services.Logging
 {
-    private readonly ILogger _logger;
-
-    public LoggerService(ILogger logger)
+    public class LoggerService : ILoggerService
     {
-        _logger = logger;
-    }
+        private readonly ILogger _logger;
 
-    public void LogInformation(string msg)
-    {
-        _logger.Information(msg);
-    }
-
-    public void LogWarning(string msg)
-    {
-        _logger.Warning(msg);
-    }
-
-    public void LogTrace(string msg)
-    {
-        _logger.Information(msg);
-    }
-
-    public void LogDebug(string msg)
-    {
-        _logger.Debug(msg);
-    }
-
-    public void LogError(object request, string errorMsg)
-    {
-        string requestType = request.GetType().ToString();
-        string requestClass = requestType.Substring(requestType.LastIndexOf('.') + 1);
-        _logger.Error("{RequestClass} handled with the error: {ErrorMsg}", requestClass, errorMsg);
+        public void LogError(object request, string errorMsg)
+        {
+            var requestType = request.GetType().ToString();
+            var requestClass = requestType.Substring(requestType.LastIndexOf('.') + 1);
+            _logger.LogError("{RequestClass} handled with the error: {ErrorMsg}", requestClass, errorMsg);
+        }
     }
 }

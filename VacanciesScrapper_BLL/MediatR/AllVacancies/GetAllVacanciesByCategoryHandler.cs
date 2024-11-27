@@ -4,30 +4,31 @@ using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
 using VacanciesScrapper_BLL.Services.Logging;
 
-namespace VacanciesScrapper_BLL.MediatR.JobSites.AllVacancies;
-
-public class GetAllVacanciesByCategoryHandler : IRequestHandler<GetAllVacanciesByCategoryQuery, Result<IEnumerable<Vacancy>>>
+namespace VacanciesScrapper_BLL.MediatR.AllVacancies
 {
-    private IHomeVacanciesService _homeService;
-    private ILoggerService _logger;
-    
-    public GetAllVacanciesByCategoryHandler(IHomeVacanciesService homeService, ILoggerService logger)
+    public class GetAllVacanciesByCategoryHandler : IRequestHandler<GetAllVacanciesByCategoryQuery, Result<IEnumerable<Vacancy>>>
     {
-        _homeService = homeService;
-        _logger = logger;
-    }
+        private readonly IHomeVacanciesService _homeService;
+        private readonly ILoggerService _logger;
 
-    public async Task<Result<IEnumerable<Vacancy>>> Handle(GetAllVacanciesByCategoryQuery request, CancellationToken cancellationToken)
-    {
-        var vacancies = await _homeService.GetAllVacanciesByCategory(request.cat, request.exp);
-
-        if (vacancies is null || vacancies.Count() == 0)
+        public GetAllVacanciesByCategoryHandler(IHomeVacanciesService homeService, ILoggerService logger)
         {
-            const string errorMsg = $"Cannot find any vacancies";
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
+            _homeService = homeService;
+            _logger = logger;
         }
 
-        return Result.Ok(vacancies);
+        public async Task<Result<IEnumerable<Vacancy>>> Handle(GetAllVacanciesByCategoryQuery request, CancellationToken cancellationToken)
+        {
+            var vacancies = await _homeService.GetAllVacanciesByCategory(request.cat, request.exp);
+
+            if (!vacancies.Any())
+            {
+                const string errorMsg = "Cannot find any vacancies";
+                _logger.LogError(request, errorMsg);
+                return Result.Ok(Enumerable.Empty<Vacancy>());
+            }
+
+            return Result.Ok(vacancies);
+        }
     }
 }

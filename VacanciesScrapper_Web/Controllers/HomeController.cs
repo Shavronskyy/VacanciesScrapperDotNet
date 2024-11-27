@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Diagnostics;
-using System.Text.Json.Serialization;
+using Microsoft.Extensions.Options;
+using VacanciesScrapper_Utils.Enums;
+using VacanciesScrapper_Web.Config;
 using VacanciesScrapper_Web.Models;
 
 namespace VacanciesScrapper_Web.Controllers
@@ -9,20 +9,26 @@ namespace VacanciesScrapper_Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UrlsOptions _options;
         private readonly HttpClient _client;
-        Uri baseUri = new Uri("https://localhost:7032/");
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, HttpClient client, IOptions<UrlsOptions> options)
         {
+            _options = options.Value;
             _logger = logger;
-            _client = new HttpClient();
-            _client.BaseAddress = baseUri;
+            _client = client;
+            _client.BaseAddress = new Uri(_options.BaseApiUrl);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] Categories cat, [FromQuery]YearsOfExperience exp )
         {
-            HttpResponseMessage response = _client.GetAsync("api/AllVacancies/GetAllVacanciesByCategory").Result;
+            if (cat == null) cat = Categories.Java;
+            if (exp == null) exp = YearsOfExperience.LessThanOne;
+
+            var requestUri = $"{_options.GetAllVacanciesUrl}?cat={cat}&exp={exp}";
+
+            var response = await _client.GetAsync(requestUri);
 
             if (response.IsSuccessStatusCode)
             {
@@ -30,6 +36,7 @@ namespace VacanciesScrapper_Web.Controllers
                 return View(result);
             }
 
+            _logger.LogInformation("Vacancies not found");
             return View(new List<VacancyViewModel>());
         }
     }

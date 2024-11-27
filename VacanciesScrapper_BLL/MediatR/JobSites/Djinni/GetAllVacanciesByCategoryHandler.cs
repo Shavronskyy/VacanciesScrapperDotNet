@@ -4,30 +4,31 @@ using VacanciesScrapper_BLL.Models;
 using VacanciesScrapper_BLL.Services.Interfaces;
 using VacanciesScrapper_BLL.Services.Logging;
 
-namespace VacanciesScrapper_BLL.MediatR.JobSites.Djinni;
-
-public class GetAllDjinniVacanciesByCategoryHandler : IRequestHandler<GetAllDjinniVacanciesByCategoryQuery, Result<IEnumerable<Vacancy>>>
+namespace VacanciesScrapper_BLL.MediatR.JobSites.Djinni
 {
-    private IDjinniVacanciesService _djinniService;
-    private ILoggerService _logger;
-
-    public GetAllDjinniVacanciesByCategoryHandler(IDjinniVacanciesService djinniService, ILoggerService logger)
+    public class GetAllDjinniVacanciesByCategoryHandler : IRequestHandler<GetAllDjinniVacanciesByCategoryQuery, Result<IEnumerable<Vacancy>>>
     {
-        _djinniService = djinniService;
-        _logger = logger;
-    }
+        private readonly IDjinniVacanciesService _djinniService;
+        private readonly ILoggerService _logger;
 
-    public async Task<Result<IEnumerable<Vacancy>>> Handle(GetAllDjinniVacanciesByCategoryQuery request, CancellationToken cancellationToken)
-    {
-        var vacancies = await _djinniService.GetAllDjinniVacanciesByCategory(request.cat, request.exp);
-
-        if (vacancies is null || vacancies.Count() == 0)
+        public GetAllDjinniVacanciesByCategoryHandler(IDjinniVacanciesService djinniService, ILoggerService logger)
         {
-            const string errorMsg = $"Cannot find any vacancies";
-            _logger.LogError(request, errorMsg);
-            return Result.Fail(new Error(errorMsg));
+            _djinniService = djinniService;
+            _logger = logger;
         }
-        
-        return Result.Ok(vacancies);
+
+        public async Task<Result<IEnumerable<Vacancy>>> Handle(GetAllDjinniVacanciesByCategoryQuery request, CancellationToken cancellationToken)
+        {
+            var vacancies = await _djinniService.GetAllDjinniVacanciesByCategory(request.cat, request.exp);
+
+            if (!vacancies.Any())
+            {
+                const string errorMsg = $"Cannot find any vacancies";
+                _logger.LogError(request, errorMsg);
+                return Result.Ok(Enumerable.Empty<Vacancy>());
+            }
+
+            return Result.Ok(vacancies);
+        }
     }
 }
