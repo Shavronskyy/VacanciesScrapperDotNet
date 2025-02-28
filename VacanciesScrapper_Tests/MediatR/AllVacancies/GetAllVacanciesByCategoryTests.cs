@@ -19,12 +19,11 @@ namespace VacanciesScrapper_Tests.MediatR.AllVacancies
 		}
 
         [Fact]
-        public async Task Handler_ShouldReturnErrorMsg_WhenVacanciesIsNull()
+        public async Task Handler_ShouldReturnEmptyList_WhenVacanciesIsNull()
         {
             // Arrange
             var query = new GetAllVacanciesByCategoryQuery(Categories.Dotnet, YearsOfExperience.LessThanOne);
             var handler = new GetAllVacanciesByCategoryHandler(_serviceMock.Object, _loggerMock.Object);
-            var expectedErrorMessage = $"Cannot find any vacancies";
 
             _serviceMock.Setup(x => x.GetAllVacanciesByCategory(default, default)).ReturnsAsync((IEnumerable<Vacancy>)null);
 
@@ -34,8 +33,7 @@ namespace VacanciesScrapper_Tests.MediatR.AllVacancies
             // Assert
             Assert.Multiple(() =>
             {
-                Assert.True(result.IsFailed);
-                Assert.Equal(expectedErrorMessage, result.Errors.FirstOrDefault()?.Message);
+                Assert.True(result.Value.Count() < 1);
             });
         }
     }
