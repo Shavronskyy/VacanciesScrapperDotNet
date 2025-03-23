@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="FluentResults" Version="3.16.0" />
-    <PackageReference Include="GroqSharp" Version="1.1.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.64" />
     <PackageReference Include="itext" Version="8.0.5" />
     <PackageReference Include="MediatR" Version="12.4.1" />
@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VacanciesScrapper_DAL\VacanciesScrapper_DAL.csproj" />
     <ProjectReference Include="..\VacanciesScrapper_Utils\VacanciesScrapper_Utils.csproj" />
   </ItemGroup>
 </Project>

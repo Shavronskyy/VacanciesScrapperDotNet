@@ -5,6 +5,12 @@ using VacanciesScrapper_BLL.Services.Realizations;
 using VacanciesScrapper_Utils.Options;
 using VacanciesScrapper_Web.Config;
 using VacanciesScrapper_DAL.Database;
+using VacanciesScrapper_DAL.Repositories.Interfaces.Base;
+using VacanciesScrapper_DAL.Repositories.Realizations.Base;
+using VacanciesScrapper_DAL.Repositories.Interfaces.Vacancies;
+using VacanciesScrapper_DAL.Repositories.Realizations.Vacancies;
+using VacanciesScrapper_DAL.Repositories.Interfaces.Companies;
+using VacanciesScrapper_DAL.Repositories.Realizations.Companies;
 
 namespace VacanciesScrapper_WebApi
 {
@@ -29,6 +35,7 @@ namespace VacanciesScrapper_WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddLogging();
+            builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
             var currentAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 
@@ -38,6 +45,11 @@ namespace VacanciesScrapper_WebApi
             builder.Services.AddTransient<IScrapperService, ScrapperService>();
             builder.Services.AddTransient<ILoggerService, LoggerService>();
 
+            // Repository
+            builder.Services.AddTransient<IRepositoryWrapper, RepositoryWrapper>();
+            builder.Services.AddTransient<IVacanciesRepository, VacanciesRepository>();
+            builder.Services.AddTransient<ICompaniesRepository, CompaniesRepository>();
+             
             builder.Services.AddMediatR(conf =>
             {
                 conf.RegisterServicesFromAssemblies(currentAssemblies);

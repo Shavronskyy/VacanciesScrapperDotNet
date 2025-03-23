@@ -5,6 +5,6 @@ namespace VacanciesScrapper_BLL.Services.Interfaces
 {
     public interface IDouVacanciesService
     {
-        Task<IEnumerable<VacancyDto>> GetAllDouVacanciesByCategory(Categories? cat, YearsOfExperience? exp);
+        Task GetAllDouVacanciesByCategory(Categories? cat, YearsOfExperience? exp);
     }
 }
