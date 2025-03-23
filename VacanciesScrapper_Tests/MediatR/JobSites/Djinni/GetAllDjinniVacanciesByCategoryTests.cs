@@ -26,7 +26,7 @@ namespace VacanciesScrapper_Tests.MediatR.JobSites.Djinni
             var handler = new GetAllDjinniVacanciesByCategoryHandler(_serviceMock.Object, _logger.Object);
             var expectedErrorMessage = $"Cannot find any vacancies";
 
-            _serviceMock.Setup(x => x.GetAllDjinniVacanciesByCategory(default, default)).ReturnsAsync((IEnumerable<Vacancy>)null);
+            _serviceMock.Setup(x => x.GetAllDjinniVacanciesByCategory(default, default)).ReturnsAsync((IEnumerable<VacancyDto>)null);
 
             // Act
             var result = await handler.Handle(query, CancellationToken.None);

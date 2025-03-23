@@ -27,7 +27,7 @@ namespace VacanciesScrapper_Tests.MediatR.JobSites.Dou
         var handler = new GetAllDouVacanciesByCategoryHandler(_serviceMock.Object, _logger.Object);
         var expectedErrorMessage = $"Cannot find any vacancies";
 
-        _serviceMock.Setup(x => x.GetAllDouVacanciesByCategory(default, default)).ReturnsAsync((IEnumerable<Vacancy>)null);
+        _serviceMock.Setup(x => x.GetAllDouVacanciesByCategory(default, default)).ReturnsAsync((IEnumerable<VacancyDto>)null);
 
         // Act
         var result = await handler.Handle(query, CancellationToken.None);

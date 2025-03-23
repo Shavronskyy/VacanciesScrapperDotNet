@@ -7,7 +7,7 @@ using VacanciesScrapper_BLL.Services.Logging;
 
 namespace VacanciesScrapper_BLL.MediatR.JobSites.DOU
 {
-    public class GetAllDouVacanciesByCategoryHandler : IRequestHandler<GetAllDouVacanciesByCategoryQuery, Result<IEnumerable<Vacancy>>>
+    public class GetAllDouVacanciesByCategoryHandler : IRequestHandler<GetAllDouVacanciesByCategoryQuery, Result<IEnumerable<VacancyDto>>>
     {
         private readonly IDouVacanciesService _douService;
         private readonly ILoggerService _logger;
@@ -18,7 +18,7 @@ namespace VacanciesScrapper_BLL.MediatR.JobSites.DOU
             _logger = logger;
         }
 
-        public async Task<Result<IEnumerable<Vacancy>>> Handle(GetAllDouVacanciesByCategoryQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<VacancyDto>>> Handle(GetAllDouVacanciesByCategoryQuery request, CancellationToken cancellationToken)
         {
             var vacancies = await _douService.GetAllDouVacanciesByCategory(request.cat, request.exp);
 
@@ -26,7 +26,7 @@ namespace VacanciesScrapper_BLL.MediatR.JobSites.DOU
             {
                 const string errorMsg = $"Cannot find any vacancies";
                 _logger.LogError(request, errorMsg);
-                return Result.Ok(Enumerable.Empty<Vacancy>());
+                return Result.Ok(Enumerable.Empty<VacancyDto>());
             }
 
             return Result.Ok(vacancies);

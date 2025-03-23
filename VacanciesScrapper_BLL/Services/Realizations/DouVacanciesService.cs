@@ -24,7 +24,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
             _options = options.Value;
         }
 
-        public async Task<IEnumerable<Vacancy>> GetAllDouVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
+        public async Task<IEnumerable<VacancyDto>> GetAllDouVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
             var url = _options.DouBaseUrl + CategoriesDou.GetCategory(cat) + CategoriesDou.GetExperience(exp);
 
@@ -32,7 +32,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
 
             var nodes = document.DocumentNode.SelectNodes("//li[@class='l-vacancy']");
 
-            var vacancy = new List<Vacancy>();
+            var vacancy = new List<VacancyDto>();
 
             if (nodes is null)
             {
@@ -62,7 +62,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
                 CodeCleaner.ScrubHtml(ref company);
                 CodeCleaner.ScrubHtml(ref salary);
 
-                vacancy.Add(new Vacancy
+                vacancy.Add(new VacancyDto
                 {
                     CreationDate = date,
                     Title = title,

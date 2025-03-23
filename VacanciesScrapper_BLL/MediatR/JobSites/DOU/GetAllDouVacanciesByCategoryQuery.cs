@@ -6,5 +6,5 @@ using VacanciesScrapper_BLL.Models;
 
 namespace VacanciesScrapper_BLL.MediatR.JobSites.DOU
 {
-    public record GetAllDouVacanciesByCategoryQuery(Categories? cat, YearsOfExperience? exp) : IRequest<Result<IEnumerable<Vacancy>>>;
+    public record GetAllDouVacanciesByCategoryQuery(Categories? cat, YearsOfExperience? exp) : IRequest<Result<IEnumerable<VacancyDto>>>;
 }

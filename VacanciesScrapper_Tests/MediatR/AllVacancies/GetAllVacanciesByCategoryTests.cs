@@ -26,7 +26,7 @@ namespace VacanciesScrapper_Tests.MediatR.AllVacancies
             var handler = new GetAllVacanciesByCategoryHandler(_serviceMock.Object, _loggerMock.Object);
             var expectedErrorMessage = $"Cannot find any vacancies";
 
-            _serviceMock.Setup(x => x.GetAllVacanciesByCategory(default, default)).ReturnsAsync((IEnumerable<Vacancy>)null);
+            _serviceMock.Setup(x => x.GetAllVacanciesByCategory(default, default)).ReturnsAsync((IEnumerable<VacancyDto>)null);
 
             // Act
             var result = await handler.Handle(query, CancellationToken.None);

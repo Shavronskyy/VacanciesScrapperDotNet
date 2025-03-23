@@ -13,20 +13,18 @@ namespace VacanciesScrapper_BLL.Services.Realizations
     public class DjinniVacanciesService : IDjinniVacanciesService
     {
         private readonly IScrapperService _scrapperService;
-        private readonly IAIAnalyzerService _aiService;
         private readonly ILoggerService _logger;
         private readonly JobSitesUrlsOptions _options;
 
-        public DjinniVacanciesService(IScrapperService scrapperService, IAIAnalyzerService aiService,
+        public DjinniVacanciesService(IScrapperService scrapperService,
             ILoggerService logger, IOptions<JobSitesUrlsOptions> options)
         {
             _scrapperService = scrapperService;
-            _aiService = aiService;
             _logger = logger;
             _options = options.Value;
         }
 
-        public async Task<IEnumerable<Vacancy>> GetAllDjinniVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
+        public async Task<IEnumerable<VacancyDto>> GetAllDjinniVacanciesByCategory(Categories? cat, YearsOfExperience? exp)
         {
             var url = _options.DjinniBaseUrl + CategoriesDjinni.GetCategory(cat) + CategoriesDjinni.GetExperience(exp);
 
@@ -35,7 +33,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
             var nodes = document.DocumentNode.SelectNodes(
                 "//ul[@class='list-unstyled list-jobs mb-4']/li[@class='mb-4']");
 
-            var result = new List<Vacancy>();
+            var result = new List<VacancyDto>();
 
             if (nodes is null)
             {
@@ -61,7 +59,6 @@ namespace VacanciesScrapper_BLL.Services.Realizations
                     : companyImgNode.Attributes["src"].Value;
                 //var date = await GetVacancyCreationDate(link);
                 var fullDescription = await GetFullDescription(link);
-                var fit = await AnalyzingVacancyByAI(fullDescription);
 
                 CodeCleaner.ScrubHtml(ref title);
                 CodeCleaner.ScrubHtml(ref location);
@@ -69,7 +66,7 @@ namespace VacanciesScrapper_BLL.Services.Realizations
                 CodeCleaner.ScrubHtml(ref company);
                 CodeCleaner.ScrubHtml(ref salary);
 
-                result.Add(new Vacancy
+                result.Add(new VacancyDto
                 {
                     Title = title,
                     Location = location,
@@ -78,18 +75,12 @@ namespace VacanciesScrapper_BLL.Services.Realizations
                     Link = link,
                     Salary = salary,
                     CompanyImg = companyImg,
-                    FitByCv = fit,
                     //CreationDate = date,
                     //Description = fullDescription
                 });
             }
 
             return result;
-        }
-
-        private async Task<int> AnalyzingVacancyByAI(string fullDescription)
-        {
-            return await _aiService.AnalyzeVacancyAnswerInPrecents(fullDescription);
         }
 
         private async Task<string> GetFullDescription(string url)

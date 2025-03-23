@@ -1,7 +1,7 @@
 ﻿using System;
 namespace VacanciesScrapper_BLL.Models
 {
-	public class Company
+	public class CompanyDto
 	{
 		public string Title { get; set; }
 

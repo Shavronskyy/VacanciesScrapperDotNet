@@ -1,6 +1,6 @@
 ﻿namespace VacanciesScrapper_BLL.Models
 {
-    public class Vacancy
+    public class VacancyDto
     {
         public string Title { get; set; }
 

@@ -5,6 +5,6 @@ namespace VacanciesScrapper_BLL.Services.Interfaces
 {
     public interface IHomeVacanciesService
     {
-        Task<IEnumerable<Vacancy>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp);
+        Task<IEnumerable<VacancyDto>> GetAllVacanciesByCategory(Categories? cat, YearsOfExperience? exp);
     }
 }

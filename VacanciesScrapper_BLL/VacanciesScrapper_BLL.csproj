@@ -21,6 +21,7 @@
     <Folder Include="MediatR\JobSites\DOU\" />
     <Folder Include="MediatR\Scrapper\" />
     <Folder Include="MediatR\AllVacancies\" />
+    <Folder Include="Services\Interfaces\BackgroundJobs\" />
   </ItemGroup>
 
   <ItemGroup>

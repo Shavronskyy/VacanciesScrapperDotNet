@@ -6,7 +6,7 @@ using VacanciesScrapper_BLL.Services.Logging;
 
 namespace VacanciesScrapper_BLL.MediatR.JobSites.Djinni
 {
-    public class GetAllDjinniVacanciesByCategoryHandler : IRequestHandler<GetAllDjinniVacanciesByCategoryQuery, Result<IEnumerable<Vacancy>>>
+    public class GetAllDjinniVacanciesByCategoryHandler : IRequestHandler<GetAllDjinniVacanciesByCategoryQuery, Result<IEnumerable<VacancyDto>>>
     {
         private readonly IDjinniVacanciesService _djinniService;
         private readonly ILoggerService _logger;
@@ -17,7 +17,7 @@ namespace VacanciesScrapper_BLL.MediatR.JobSites.Djinni
             _logger = logger;
         }
 
-        public async Task<Result<IEnumerable<Vacancy>>> Handle(GetAllDjinniVacanciesByCategoryQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<VacancyDto>>> Handle(GetAllDjinniVacanciesByCategoryQuery request, CancellationToken cancellationToken)
         {
             var vacancies = await _djinniService.GetAllDjinniVacanciesByCategory(request.cat, request.exp);
 
@@ -25,7 +25,7 @@ namespace VacanciesScrapper_BLL.MediatR.JobSites.Djinni
             {
                 const string errorMsg = $"Cannot find any vacancies";
                 _logger.LogError(request, errorMsg);
-                return Result.Ok(Enumerable.Empty<Vacancy>());
+                return Result.Ok(Enumerable.Empty<VacancyDto>());
             }
 
             return Result.Ok(vacancies);

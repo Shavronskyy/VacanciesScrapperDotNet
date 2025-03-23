@@ -6,7 +6,7 @@ using VacanciesScrapper_BLL.Services.Logging;
 
 namespace VacanciesScrapper_BLL.MediatR.AllVacancies
 {
-    public class GetAllVacanciesByCategoryHandler : IRequestHandler<GetAllVacanciesByCategoryQuery, Result<IEnumerable<Vacancy>>>
+    public class GetAllVacanciesByCategoryHandler : IRequestHandler<GetAllVacanciesByCategoryQuery, Result<IEnumerable<VacancyDto>>>
     {
         private readonly IHomeVacanciesService _homeService;
         private readonly ILoggerService _logger;
@@ -17,7 +17,7 @@ namespace VacanciesScrapper_BLL.MediatR.AllVacancies
             _logger = logger;
         }
 
-        public async Task<Result<IEnumerable<Vacancy>>> Handle(GetAllVacanciesByCategoryQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<VacancyDto>>> Handle(GetAllVacanciesByCategoryQuery request, CancellationToken cancellationToken)
         {
             var vacancies = await _homeService.GetAllVacanciesByCategory(request.cat, request.exp);
 
@@ -25,7 +25,7 @@ namespace VacanciesScrapper_BLL.MediatR.AllVacancies
             {
                 const string errorMsg = "Cannot find any vacancies";
                 _logger.LogError(request, errorMsg);
-                return Result.Ok(Enumerable.Empty<Vacancy>());
+                return Result.Ok(Enumerable.Empty<VacancyDto>());
             }
 
             return Result.Ok(vacancies);
